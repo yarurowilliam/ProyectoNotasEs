@@ -1,52 +1,17 @@
 ﻿using Presentacion.InicioModule;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Position;
 
 namespace Presentacion.LoginModule
 {
     public partial class FrmLogin : Form
     {
-        private Notifier notifier;
-
         public FrmLogin()
         {
             InitializeComponent();
         }
 
-        private void FrmLogin_Load(object sender, EventArgs e)
-        {
-            notifier = new Notifier(cfg =>
-            {
-                cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: this,
-                    corner: Corner.BottomRight,
-                    offsetX: 10,
-                    offsetY: 10);
-
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(3), // Duración
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
-            });
-        }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
             Auth();
-        }
-
-        private void WindowOutsideHeader(object sender, EventArgs e)
-        {
-            // Lógica del método
         }
 
         private async void Auth()

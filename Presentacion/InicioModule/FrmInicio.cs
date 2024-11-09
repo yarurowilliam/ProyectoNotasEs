@@ -1,20 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Presentacion.GestionDocenteModule;
 
-namespace Presentacion.InicioModule
+namespace Presentacion.InicioModule;
+
+public partial class FrmInicio : Form
 {
-    public partial class FrmInicio : Form
+    public FrmInicio()
     {
-        public FrmInicio()
+        InitializeComponent();
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private Form activeForm = null;
+
+    private void OpenFormInPanel(Form childForm)
+    {
+        if (activeForm != null)
         {
-            InitializeComponent();
+            activeForm.Close();
         }
+
+        activeForm = childForm;
+        childForm.TopLevel = false;
+        childForm.FormBorderStyle = FormBorderStyle.None;
+        childForm.Dock = DockStyle.Fill;
+        panelPrincipal.Controls.Add(childForm);
+        panelPrincipal.Tag = childForm;
+        childForm.BringToFront();
+        childForm.Show();
+    }
+
+    private void sonRegistrarDocente_Click(object sender, EventArgs e)
+    {
+        OpenFormInPanel(new FrmRegistrarDocente());
     }
 }

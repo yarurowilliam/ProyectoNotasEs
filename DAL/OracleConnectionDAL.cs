@@ -6,7 +6,7 @@ namespace DAL;
 
 public class OracleConnectionDAL
 {
-    private readonly string _connectionString;
+    public static string _connectionString = "User Id=Administrador;Password=123456;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=34.135.42.7)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=xepdb1)));";
 
     public OracleConnectionDAL()
     {
