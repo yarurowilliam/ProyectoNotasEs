@@ -25,7 +25,7 @@ namespace Presentacion.LoginModule
             for (int i = 0; i <= 100; i += 10)
             {
                 materialProgressBarLoading.Value = i;
-                await Task.Delay(300); // Ajusta el tiempo según el efecto de carga que desees
+                await Task.Delay(10); // Ajusta el tiempo según el efecto de carga que desees
             }
 
 

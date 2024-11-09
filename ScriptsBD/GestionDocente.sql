@@ -18,6 +18,12 @@ CREATE TABLE Docente (
     Estado VARCHAR2(10) DEFAULT 'ACTIVO' CHECK (Estado IN ('ACTIVO', 'INACTIVO'))
 );
 
+CREATE TABLE Usuario (
+    Identificacion VARCHAR2(20) PRIMARY KEY,
+    Password VARCHAR2(50) DEFAULT 'Colegio2024',
+    Estado VARCHAR2(10) DEFAULT 'ACTIVO' CHECK (Estado IN ('ACTIVO', 'INACTIVO'))
+);
+
 
 --FUNCIONES
 
@@ -29,7 +35,7 @@ BEGIN
 END CalcularEdad;
 /
 
--- Especificación del Paquete PARA LA GESTION DOCENTE
+-- Especificaciï¿½n del Paquete PARA LA GESTION DOCENTE
 CREATE OR REPLACE PACKAGE GestionDocente AS
     PROCEDURE InsertarDocente (
         p_TipoIdentificacion IN VARCHAR2,
@@ -47,18 +53,7 @@ CREATE OR REPLACE PACKAGE GestionDocente AS
     );
 
     PROCEDURE ConsultarDocente (
-        p_TipoIdentificacion IN VARCHAR2 DEFAULT NULL,
         p_NumeroIdentificacion IN VARCHAR2 DEFAULT NULL,
-        p_PrimerNombre IN VARCHAR2 DEFAULT NULL,
-        p_SegundoNombre IN VARCHAR2 DEFAULT NULL,
-        p_PrimerApellido IN VARCHAR2 DEFAULT NULL,
-        p_SegundoApellido IN VARCHAR2 DEFAULT NULL,
-        p_FechaNacimiento IN DATE DEFAULT NULL,
-        p_Telefono IN VARCHAR2 DEFAULT NULL,
-        p_Direccion IN VARCHAR2 DEFAULT NULL,
-        p_Correo IN VARCHAR2 DEFAULT NULL,
-        p_Practicante IN NUMBER DEFAULT NULL,
-        p_Estado IN VARCHAR2 DEFAULT NULL,
         resultado OUT SYS_REFCURSOR
     );
 
@@ -101,6 +96,7 @@ CREATE OR REPLACE PACKAGE BODY GestionDocente AS
         p_UltimoUsuario IN VARCHAR2
     ) AS
     BEGIN
+        -- Insertar en la tabla Docente
         INSERT INTO Docente (
             TipoIdentificacion,
             NumeroIdentificacion,
@@ -132,21 +128,22 @@ CREATE OR REPLACE PACKAGE BODY GestionDocente AS
             'ACTIVO',
             p_UltimoUsuario
         );
+
+        -- Insertar en la tabla Usuario
+        INSERT INTO Usuario (
+            Identificacion,
+            Password,
+            Estado
+        ) VALUES (
+            p_NumeroIdentificacion,
+            'Colegio2024', -- ContraseÃ±a predeterminada
+            'ACTIVO'       -- Estado inicial
+        );
+
     END InsertarDocente;
 
     PROCEDURE ConsultarDocente (
-        p_TipoIdentificacion IN VARCHAR2 DEFAULT NULL,
         p_NumeroIdentificacion IN VARCHAR2 DEFAULT NULL,
-        p_PrimerNombre IN VARCHAR2 DEFAULT NULL,
-        p_SegundoNombre IN VARCHAR2 DEFAULT NULL,
-        p_PrimerApellido IN VARCHAR2 DEFAULT NULL,
-        p_SegundoApellido IN VARCHAR2 DEFAULT NULL,
-        p_FechaNacimiento IN DATE DEFAULT NULL,
-        p_Telefono IN VARCHAR2 DEFAULT NULL,
-        p_Direccion IN VARCHAR2 DEFAULT NULL,
-        p_Correo IN VARCHAR2 DEFAULT NULL,
-        p_Practicante IN NUMBER DEFAULT NULL,
-        p_Estado IN VARCHAR2 DEFAULT NULL,
         resultado OUT SYS_REFCURSOR
     ) AS
     BEGIN
@@ -168,18 +165,7 @@ CREATE OR REPLACE PACKAGE BODY GestionDocente AS
                    UltimoUsuario,
                    Estado
             FROM Docente
-            WHERE (p_TipoIdentificacion IS NULL OR TipoIdentificacion = p_TipoIdentificacion)
-              AND (p_NumeroIdentificacion IS NULL OR NumeroIdentificacion = p_NumeroIdentificacion)
-              AND (p_PrimerNombre IS NULL OR PrimerNombre = p_PrimerNombre)
-              AND (p_SegundoNombre IS NULL OR SegundoNombre = p_SegundoNombre)
-              AND (p_PrimerApellido IS NULL OR PrimerApellido = p_PrimerApellido)
-              AND (p_SegundoApellido IS NULL OR SegundoApellido = p_SegundoApellido)
-              AND (p_FechaNacimiento IS NULL OR FechaNacimiento = p_FechaNacimiento)
-              AND (p_Telefono IS NULL OR Telefono = p_Telefono)
-              AND (p_Direccion IS NULL OR Direccion = p_Direccion)
-              AND (p_Correo IS NULL OR Correo = p_Correo)
-              AND (p_Practicante IS NULL OR Practicante = p_Practicante)
-              AND (p_Estado IS NULL OR Estado = p_Estado);
+            WHERE (p_NumeroIdentificacion IS NULL OR NumeroIdentificacion = p_NumeroIdentificacion);
     END ConsultarDocente;
 
     PROCEDURE ModificarDocente (
@@ -221,8 +207,18 @@ CREATE OR REPLACE PACKAGE BODY GestionDocente AS
         UPDATE Docente
         SET Estado = 'INACTIVO'
         WHERE NumeroIdentificacion = p_NumeroIdentificacion;
+
+        UPDATE Usuario
+        SET Estado = 'INACTIVO'
+        WHERE Identificacion = p_NumeroIdentificacion;
     END InactivarDocente;
 END GestionDocente;
 /
 
-
+CREATE OR REPLACE TRIGGER trg_update_fecha_modificacion
+BEFORE UPDATE ON Docente
+FOR EACH ROW
+BEGIN
+    :NEW.FechaModificacion := SYSDATE;
+END;
+/
