@@ -23,42 +23,42 @@ public partial class FrmConsultarDocente : Form
         _docenteBLL = new DocenteBLL();
         // Llamar a la capa BLL para obtener los datos
 
-        List<Docente> listaDocentes = await _docenteBLL.ConsultarDocenteAsync(
-            null,
-            false
-        );
+        //List<Docente> listaDocentes = await _docenteBLL.ConsultarDocenteAsync(
+        //    null,
+        //    false
+        //);
 
-        // Asignar los datos al DataGridView
-        tablaDocentes.DataSource = listaDocentes;
+        //// Asignar los datos al DataGridView
+        //tablaDocentes.DataSource = listaDocentes;
     }
 
     private async void BuscarConFiltros()
     {
-        try
-        {
-            _docenteBLL = new DocenteBLL();
-            // Obtener filtros desde los controles del formulario
-            string numeroIdentificacion = txtNumeroIdentificacion.Text;
-            bool aplicarFiltros = true; // Checkbox para activar/desactivar filtros
+        //try
+        //{
+        //    _docenteBLL = new DocenteBLL();
+        //    // Obtener filtros desde los controles del formulario
+        //    string numeroIdentificacion = txtNumeroIdentificacion.Text;
+        //    bool aplicarFiltros = true; // Checkbox para activar/desactivar filtros
 
-            if (numeroIdentificacion.Length == 0)
-            {
-                BuscarAsync();
-                return;
-            }
+        //    if (numeroIdentificacion.Length == 0)
+        //    {
+        //        BuscarAsync();
+        //        return;
+        //    }
 
-            // Llamar a la capa BLL para obtener los datos
-            List<Docente> listaDocentes = await _docenteBLL.ConsultarDocenteAsync(
-                numeroIdentificacion,
-                aplicarFiltros
-            );
+        //    // Llamar a la capa BLL para obtener los datos
+        //    List<Docente> listaDocentes = await _docenteBLL.ConsultarDocenteAsync(
+        //        numeroIdentificacion,
+        //        aplicarFiltros
+        //    );
 
-            // Asignar los datos al DataGridView
-            tablaDocentes.DataSource = listaDocentes;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error al consultar docentes: {ex.Message}");
-        }
+        //    // Asignar los datos al DataGridView
+        //    tablaDocentes.DataSource = listaDocentes;
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show($"Error al consultar docentes: {ex.Message}");
+        //}
     }
 }

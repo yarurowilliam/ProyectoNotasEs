@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             cardInfo1 = new MaterialSkin.Controls.MaterialCard();
-            isPracticante = new MaterialSkin.Controls.MaterialCheckbox();
+            btnDesactivar = new MaterialSkin.Controls.MaterialButton();
             btnLimpiar = new MaterialSkin.Controls.MaterialButton();
             btnGuardar = new MaterialSkin.Controls.MaterialButton();
             txtDireccion = new MaterialSkin.Controls.MaterialTextBox2();
@@ -54,27 +53,17 @@
             materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            tablaDocentes = new DataGridView();
+            BtnBuscar = new MaterialSkin.Controls.MaterialButton();
             cardInfo1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tablaDocentes).BeginInit();
             SuspendLayout();
-            // 
-            // materialLabel1
-            // 
-            materialLabel1.AutoSize = true;
-            materialLabel1.Depth = 0;
-            materialLabel1.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
-            materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            materialLabel1.Location = new Point(411, 5);
-            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(179, 24);
-            materialLabel1.TabIndex = 0;
-            materialLabel1.Text = "Registro de docente";
-            materialLabel1.Click += materialLabel1_Click;
             // 
             // cardInfo1
             // 
             cardInfo1.BackColor = Color.FromArgb(255, 255, 255);
-            cardInfo1.Controls.Add(isPracticante);
+            cardInfo1.Controls.Add(BtnBuscar);
+            cardInfo1.Controls.Add(btnDesactivar);
             cardInfo1.Controls.Add(btnLimpiar);
             cardInfo1.Controls.Add(btnGuardar);
             cardInfo1.Controls.Add(txtDireccion);
@@ -100,30 +89,35 @@
             cardInfo1.Controls.Add(materialLabel4);
             cardInfo1.Depth = 0;
             cardInfo1.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cardInfo1.Location = new Point(20, 32);
+            cardInfo1.Location = new Point(21, 14);
             cardInfo1.Margin = new Padding(12, 10, 12, 10);
             cardInfo1.MouseState = MaterialSkin.MouseState.HOVER;
             cardInfo1.Name = "cardInfo1";
             cardInfo1.Padding = new Padding(12, 10, 12, 10);
-            cardInfo1.Size = new Size(964, 438);
+            cardInfo1.Size = new Size(1169, 265);
             cardInfo1.TabIndex = 9;
             cardInfo1.Paint += cardInfo1_Paint;
             // 
-            // isPracticante
+            // btnDesactivar
             // 
-            isPracticante.AutoSize = true;
-            isPracticante.Depth = 0;
-            isPracticante.Location = new Point(592, 314);
-            isPracticante.Margin = new Padding(0);
-            isPracticante.MouseLocation = new Point(-1, -1);
-            isPracticante.MouseState = MaterialSkin.MouseState.HOVER;
-            isPracticante.Name = "isPracticante";
-            isPracticante.ReadOnly = false;
-            isPracticante.Ripple = true;
-            isPracticante.Size = new Size(115, 37);
-            isPracticante.TabIndex = 26;
-            isPracticante.Text = "Practicante";
-            isPracticante.UseVisualStyleBackColor = true;
+            btnDesactivar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnDesactivar.BackColor = Color.Red;
+            btnDesactivar.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnDesactivar.Depth = 0;
+            btnDesactivar.HighEmphasis = true;
+            btnDesactivar.Icon = null;
+            btnDesactivar.Location = new Point(835, 182);
+            btnDesactivar.Margin = new Padding(4);
+            btnDesactivar.MouseState = MaterialSkin.MouseState.HOVER;
+            btnDesactivar.Name = "btnDesactivar";
+            btnDesactivar.NoAccentTextColor = Color.Empty;
+            btnDesactivar.Size = new Size(109, 36);
+            btnDesactivar.TabIndex = 26;
+            btnDesactivar.Text = "DESACTIVAR";
+            btnDesactivar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnDesactivar.UseAccentColor = true;
+            btnDesactivar.UseVisualStyleBackColor = false;
+            btnDesactivar.Click += btnDesactivar_Click;
             // 
             // btnLimpiar
             // 
@@ -133,7 +127,7 @@
             btnLimpiar.Depth = 0;
             btnLimpiar.HighEmphasis = true;
             btnLimpiar.Icon = null;
-            btnLimpiar.Location = new Point(370, 388);
+            btnLimpiar.Location = new Point(835, 131);
             btnLimpiar.Margin = new Padding(4);
             btnLimpiar.MouseState = MaterialSkin.MouseState.HOVER;
             btnLimpiar.Name = "btnLimpiar";
@@ -153,7 +147,7 @@
             btnGuardar.Depth = 0;
             btnGuardar.HighEmphasis = true;
             btnGuardar.Icon = null;
-            btnGuardar.Location = new Point(482, 388);
+            btnGuardar.Location = new Point(835, 87);
             btnGuardar.Margin = new Padding(4);
             btnGuardar.MouseState = MaterialSkin.MouseState.HOVER;
             btnGuardar.Name = "btnGuardar";
@@ -175,7 +169,7 @@
             txtDireccion.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtDireccion.HideSelection = true;
             txtDireccion.LeadingIcon = null;
-            txtDireccion.Location = new Point(195, 303);
+            txtDireccion.Location = new Point(559, 108);
             txtDireccion.Margin = new Padding(3, 2, 3, 2);
             txtDireccion.MaxLength = 32767;
             txtDireccion.MouseState = MaterialSkin.MouseState.OUT;
@@ -204,7 +198,7 @@
             txtCorreo.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtCorreo.HideSelection = true;
             txtCorreo.LeadingIcon = null;
-            txtCorreo.Location = new Point(658, 244);
+            txtCorreo.Location = new Point(559, 182);
             txtCorreo.Margin = new Padding(3, 2, 3, 2);
             txtCorreo.MaxLength = 32767;
             txtCorreo.MouseState = MaterialSkin.MouseState.OUT;
@@ -233,7 +227,7 @@
             txtTelefono.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtTelefono.HideSelection = true;
             txtTelefono.LeadingIcon = null;
-            txtTelefono.Location = new Point(195, 244);
+            txtTelefono.Location = new Point(559, 32);
             txtTelefono.Margin = new Padding(3, 2, 3, 2);
             txtTelefono.MaxLength = 32767;
             txtTelefono.MouseState = MaterialSkin.MouseState.OUT;
@@ -258,7 +252,7 @@
             materialLabel12.AutoSize = true;
             materialLabel12.Depth = 0;
             materialLabel12.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel12.Location = new Point(102, 316);
+            materialLabel12.Location = new Point(556, 87);
             materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel12.Name = "materialLabel12";
             materialLabel12.Size = new Size(71, 19);
@@ -270,7 +264,7 @@
             materialLabel11.AutoSize = true;
             materialLabel11.Depth = 0;
             materialLabel11.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel11.Location = new Point(592, 253);
+            materialLabel11.Location = new Point(559, 161);
             materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel11.Name = "materialLabel11";
             materialLabel11.Size = new Size(51, 19);
@@ -282,7 +276,7 @@
             materialLabel10.AutoSize = true;
             materialLabel10.Depth = 0;
             materialLabel10.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel10.Location = new Point(106, 253);
+            materialLabel10.Location = new Point(559, 10);
             materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel10.Name = "materialLabel10";
             materialLabel10.Size = new Size(68, 19);
@@ -298,7 +292,7 @@
             txtPrimerApellido.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtPrimerApellido.HideSelection = true;
             txtPrimerApellido.LeadingIcon = null;
-            txtPrimerApellido.Location = new Point(195, 132);
+            txtPrimerApellido.Location = new Point(16, 182);
             txtPrimerApellido.Margin = new Padding(3, 2, 3, 2);
             txtPrimerApellido.MaxLength = 32767;
             txtPrimerApellido.MouseState = MaterialSkin.MouseState.OUT;
@@ -327,7 +321,7 @@
             txtPrimerNombre.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtPrimerNombre.HideSelection = true;
             txtPrimerNombre.LeadingIcon = null;
-            txtPrimerNombre.Location = new Point(195, 75);
+            txtPrimerNombre.Location = new Point(16, 108);
             txtPrimerNombre.Margin = new Padding(3, 2, 3, 2);
             txtPrimerNombre.MaxLength = 32767;
             txtPrimerNombre.MouseState = MaterialSkin.MouseState.OUT;
@@ -361,8 +355,8 @@
             comboTipoIdentificacion.FormattingEnabled = true;
             comboTipoIdentificacion.IntegralHeight = false;
             comboTipoIdentificacion.ItemHeight = 43;
-            comboTipoIdentificacion.Items.AddRange(new object[] { "Cedula de Ciudadania", "Tarjeta de Identidad", "Cedula de Extranjeria", "Pasaporte" });
-            comboTipoIdentificacion.Location = new Point(195, 15);
+            comboTipoIdentificacion.Items.AddRange(new object[] { "CEDULA DE CIUDADANIA", "TARJETA DE IDENTIDAD", "CEDULA DE EXTRANJERIA", "PASAPORTE" });
+            comboTipoIdentificacion.Location = new Point(16, 31);
             comboTipoIdentificacion.Margin = new Padding(3, 2, 3, 2);
             comboTipoIdentificacion.MaxDropDownItems = 4;
             comboTipoIdentificacion.MouseState = MaterialSkin.MouseState.OUT;
@@ -373,7 +367,7 @@
             // 
             // pickerFechaNacimiento
             // 
-            pickerFechaNacimiento.Location = new Point(513, 205);
+            pickerFechaNacimiento.Location = new Point(835, 32);
             pickerFechaNacimiento.Margin = new Padding(3, 2, 3, 2);
             pickerFechaNacimiento.Name = "pickerFechaNacimiento";
             pickerFechaNacimiento.Size = new Size(253, 23);
@@ -399,7 +393,7 @@
             txtSegundoApellido.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtSegundoApellido.HideSelection = true;
             txtSegundoApellido.LeadingIcon = null;
-            txtSegundoApellido.Location = new Point(658, 132);
+            txtSegundoApellido.Location = new Point(288, 182);
             txtSegundoApellido.Margin = new Padding(3, 2, 3, 2);
             txtSegundoApellido.MaxLength = 32767;
             txtSegundoApellido.MouseState = MaterialSkin.MouseState.OUT;
@@ -424,7 +418,7 @@
             materialLabel6.AutoSize = true;
             materialLabel6.Depth = 0;
             materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel6.Location = new Point(15, 27);
+            materialLabel6.Location = new Point(16, 10);
             materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel6.Name = "materialLabel6";
             materialLabel6.Size = new Size(158, 19);
@@ -436,7 +430,7 @@
             materialLabel8.AutoSize = true;
             materialLabel8.Depth = 0;
             materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel8.Location = new Point(295, 209);
+            materialLabel8.Location = new Point(835, 10);
             materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel8.Name = "materialLabel8";
             materialLabel8.Size = new Size(154, 19);
@@ -452,7 +446,7 @@
             txtSegundoNombre.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtSegundoNombre.HideSelection = true;
             txtSegundoNombre.LeadingIcon = null;
-            txtSegundoNombre.Location = new Point(658, 75);
+            txtSegundoNombre.Location = new Point(288, 108);
             txtSegundoNombre.Margin = new Padding(3, 2, 3, 2);
             txtSegundoNombre.MaxLength = 32767;
             txtSegundoNombre.MouseState = MaterialSkin.MouseState.OUT;
@@ -477,7 +471,7 @@
             materialLabel2.AutoSize = true;
             materialLabel2.Depth = 0;
             materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel2.Location = new Point(62, 87);
+            materialLabel2.Location = new Point(16, 87);
             materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel2.Name = "materialLabel2";
             materialLabel2.Size = new Size(111, 19);
@@ -493,7 +487,7 @@
             txtNumeroIdentificacion.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtNumeroIdentificacion.HideSelection = true;
             txtNumeroIdentificacion.LeadingIcon = null;
-            txtNumeroIdentificacion.Location = new Point(658, 15);
+            txtNumeroIdentificacion.Location = new Point(288, 31);
             txtNumeroIdentificacion.Margin = new Padding(3, 2, 3, 2);
             txtNumeroIdentificacion.MaxLength = 32767;
             txtNumeroIdentificacion.MouseState = MaterialSkin.MouseState.OUT;
@@ -518,7 +512,7 @@
             materialLabel7.AutoSize = true;
             materialLabel7.Depth = 0;
             materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel7.Location = new Point(482, 27);
+            materialLabel7.Location = new Point(288, 10);
             materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel7.Name = "materialLabel7";
             materialLabel7.Size = new Size(161, 19);
@@ -530,7 +524,7 @@
             materialLabel5.AutoSize = true;
             materialLabel5.Depth = 0;
             materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel5.Location = new Point(514, 148);
+            materialLabel5.Location = new Point(288, 161);
             materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel5.Name = "materialLabel5";
             materialLabel5.Size = new Size(129, 19);
@@ -542,7 +536,7 @@
             materialLabel3.AutoSize = true;
             materialLabel3.Depth = 0;
             materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel3.Location = new Point(62, 148);
+            materialLabel3.Location = new Point(16, 161);
             materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel3.Name = "materialLabel3";
             materialLabel3.Size = new Size(112, 19);
@@ -554,34 +548,61 @@
             materialLabel4.AutoSize = true;
             materialLabel4.Depth = 0;
             materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel4.Location = new Point(515, 87);
+            materialLabel4.Location = new Point(288, 87);
             materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel4.Name = "materialLabel4";
             materialLabel4.Size = new Size(128, 19);
             materialLabel4.TabIndex = 3;
             materialLabel4.Text = "Segundo Nombre:";
             // 
+            // tablaDocentes
+            // 
+            tablaDocentes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tablaDocentes.Location = new Point(21, 307);
+            tablaDocentes.Name = "tablaDocentes";
+            tablaDocentes.Size = new Size(1169, 377);
+            tablaDocentes.TabIndex = 10;
+            tablaDocentes.CellClick += tablaDocentes_CellClick;
+            // 
+            // BtnBuscar
+            // 
+            BtnBuscar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnBuscar.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            BtnBuscar.Depth = 0;
+            BtnBuscar.HighEmphasis = true;
+            BtnBuscar.Icon = null;
+            BtnBuscar.Location = new Point(931, 87);
+            BtnBuscar.Margin = new Padding(4);
+            BtnBuscar.MouseState = MaterialSkin.MouseState.HOVER;
+            BtnBuscar.Name = "BtnBuscar";
+            BtnBuscar.NoAccentTextColor = Color.Empty;
+            BtnBuscar.Size = new Size(64, 36);
+            BtnBuscar.TabIndex = 28;
+            BtnBuscar.Text = "🔎";
+            BtnBuscar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            BtnBuscar.UseAccentColor = false;
+            BtnBuscar.UseVisualStyleBackColor = true;
+            BtnBuscar.Click += BtnBuscar_Click;
+            // 
             // FrmRegistrarDocente
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1005, 518);
+            ClientSize = new Size(1219, 761);
+            Controls.Add(tablaDocentes);
             Controls.Add(cardInfo1);
-            Controls.Add(materialLabel1);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
             Name = "FrmRegistrarDocente";
             Text = "FrmRegistrarDocente";
             cardInfo1.ResumeLayout(false);
             cardInfo1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tablaDocentes).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialCard cardInfo1;
         private DateTimePicker pickerFechaNacimiento;
         private MaterialSkin.Controls.MaterialTextBox2 txtSegundoApellido;
@@ -606,6 +627,8 @@
         private MaterialSkin.Controls.MaterialTextBox2 txtDireccion;
         private MaterialSkin.Controls.MaterialTextBox2 txtCorreo;
         private MaterialSkin.Controls.MaterialTextBox2 txtTelefono;
-        private MaterialSkin.Controls.MaterialCheckbox isPracticante;
+        private DataGridView tablaDocentes;
+        private MaterialSkin.Controls.MaterialButton btnDesactivar;
+        private MaterialSkin.Controls.MaterialButton BtnBuscar;
     }
 }
