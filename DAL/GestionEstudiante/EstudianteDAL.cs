@@ -2,7 +2,7 @@
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 public class EstudianteDAL
 {
@@ -13,11 +13,11 @@ public class EstudianteDAL
         _connectionString = connectionString;
     }
 
-    public void InsertarEstudiante(Estudiante estudiante)
+    public async Task InsertarEstudianteAsync(Estudiante estudiante)
     {
         using (var connection = new OracleConnection(_connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
             using (var command = new OracleCommand("pq_Estudiantes.pr_Insertar", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -34,16 +34,16 @@ public class EstudianteDAL
                 command.Parameters.Add("p_Estado", OracleDbType.Varchar2).Value = estudiante.Estado;
                 command.Parameters.Add("p_AcudienteId", OracleDbType.Int32).Value = estudiante.AcudienteId;
 
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
 
-    public void ActualizarEstudiante(Estudiante estudiante)
+    public async Task ActualizarEstudianteAsync(Estudiante estudiante)
     {
         using (var connection = new OracleConnection(_connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
             using (var command = new OracleCommand("pq_Estudiantes.pr_Actualizar", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -60,40 +60,40 @@ public class EstudianteDAL
                 command.Parameters.Add("p_Estado", OracleDbType.Varchar2).Value = estudiante.Estado;
                 command.Parameters.Add("p_AcudienteId", OracleDbType.Int32).Value = estudiante.AcudienteId;
 
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
 
-    public void DesactivarEstudiante(string numeroIdentificacion)
+    public async Task DesactivarEstudianteAsync(string numeroIdentificacion)
     {
         using (var connection = new OracleConnection(_connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
             using (var command = new OracleCommand("pq_Estudiantes.pr_Desactivar", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
 
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
 
-    public Estudiante ObtenerEstudiantePorIdentificacion(string numeroIdentificacion)
+    public async Task<Estudiante> ObtenerEstudiantePorIdentificacionAsync(string numeroIdentificacion)
     {
         using (var connection = new OracleConnection(_connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
             using (var command = new OracleCommand("pq_Estudiantes.pr_TraerPorIdentificacion", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
                 command.Parameters.Add("p_Resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-                using (var reader = command.ExecuteReader())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new Estudiante
                         {
@@ -117,21 +117,21 @@ public class EstudianteDAL
         return null;
     }
 
-    public List<Estudiante> ObtenerTodosLosEstudiantes()
+    public async Task<List<Estudiante>> ObtenerTodosLosEstudiantesAsync()
     {
         var estudiantes = new List<Estudiante>();
 
         using (var connection = new OracleConnection(_connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
             using (var command = new OracleCommand("pq_Estudiantes.pr_TraerTodos", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("p_Resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-                using (var reader = command.ExecuteReader())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         estudiantes.Add(new Estudiante
                         {
