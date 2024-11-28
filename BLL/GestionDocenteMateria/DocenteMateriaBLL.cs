@@ -1,6 +1,7 @@
 ﻿using DAL;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -13,29 +14,29 @@ namespace BLL
             _docenteMateriaDAL = new DocenteMateriaDAL(connectionString);
         }
 
-        public void Insertar(string docenteNumeroIdentificacion, int materiaId)
+        public async Task InsertarAsync(string docenteNumeroIdentificacion, int materiaId)
         {
-            _docenteMateriaDAL.Insertar(docenteNumeroIdentificacion, materiaId);
+            await _docenteMateriaDAL.InsertarAsync(docenteNumeroIdentificacion, materiaId);
         }
 
-        public void Actualizar(string docenteNumeroIdentificacion, int materiaId, int nuevoMateriaId)
+        public async Task ActualizarAsync(string docenteNumeroIdentificacion, int materiaId, int nuevoMateriaId)
         {
-            _docenteMateriaDAL.Actualizar(docenteNumeroIdentificacion, materiaId, nuevoMateriaId);
+            await _docenteMateriaDAL.ActualizarAsync(docenteNumeroIdentificacion, materiaId, nuevoMateriaId);
         }
 
-        public DataTable TraerMateriasPorDocente(string docenteNumeroIdentificacion)
+        public async Task<DataTable> TraerMateriasPorDocenteAsync(string docenteNumeroIdentificacion)
         {
-            return _docenteMateriaDAL.TraerMateriasPorDocente(docenteNumeroIdentificacion);
+            return await _docenteMateriaDAL.TraerMateriasPorDocenteAsync(docenteNumeroIdentificacion);
         }
 
-        public DataTable TraerDocentesPorMateria(int materiaId)
+        public async Task<DataTable> TraerDocentesPorMateriaAsync(int materiaId)
         {
-            return _docenteMateriaDAL.TraerDocentesPorMateria(materiaId);
+            return await _docenteMateriaDAL.TraerDocentesPorMateriaAsync(materiaId);
         }
 
-        public DataTable Consultar()
+        public async Task<DataTable> ConsultarAsync()
         {
-            return _docenteMateriaDAL.Consultar();
+            return await _docenteMateriaDAL.ConsultarAsync();
         }
     }
 }

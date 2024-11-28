@@ -1,7 +1,9 @@
 ﻿using Presentacion.GestionAcudienteModule;
 using Presentacion.GestionCursosModule;
+using Presentacion.GestionDocenteMateria;
 using Presentacion.GestionDocenteModule;
 using Presentacion.GestionEstudianteModule;
+using Presentacion.GestionEstudianteSalon;
 using Presentacion.GestionMateriaModule;
 using Presentacion.GestionRolesModule;
 using Presentacion.GestionSalon;
@@ -92,10 +94,22 @@ public partial class FrmInicio : Form
         OpenFormInPanel(new FrmGestionSalon());
         lblModulo.Text = "Gestionar Salones";
     }
-    
+
     private void gestionRolesToolStripMenuItem_Click(object sender, EventArgs e)
     {
         OpenFormInPanel(new FrmRegistrarMateria());
         lblModulo.Text = "Gestionar Materias";
+    }
+
+    private void toolStripMenuItem2_Click(object sender, EventArgs e)
+    {
+        OpenFormInPanel(new FrmDocenteMateria());
+        lblModulo.Text = "Gestionar DocenteMateria";
+    }
+
+    private void gestionDocenteMateriaToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        OpenFormInPanel(new FrmEstudianteSalon());
+        lblModulo.Text = "Gestionar EstudianteSalon";
     }
 }

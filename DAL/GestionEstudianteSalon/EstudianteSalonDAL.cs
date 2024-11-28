@@ -15,29 +15,22 @@ namespace DAL
 
             using (var connection = new OracleConnection(OracleConnectionString.CadenaConexion))
             {
-                try
+                await connection.OpenAsync();
+                using (var command = new OracleCommand(query, connection))
                 {
-                    await connection.OpenAsync();
-                    using (var command = new OracleCommand(query, connection))
-                    {
-                        // Parametrizar la consulta para evitar inyección SQL
-                        command.Parameters.Add(new OracleParameter("NumeroIdentificacion", numeroIdentificacion));
-                        command.Parameters.Add(new OracleParameter("SalonId", salonId));
+                    // Parametrizar la consulta para evitar inyección SQL
+                    command.Parameters.Add(new OracleParameter("NumeroIdentificacion", numeroIdentificacion));
+                    command.Parameters.Add(new OracleParameter("SalonId", salonId));
 
-                        int result = await command.ExecuteNonQueryAsync();
-                        if (result > 0)
-                        {
-                            Console.WriteLine("Relación Estudiante-Salón insertada correctamente.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error al insertar la relación Estudiante-Salón.");
-                        }
+                    int result = await command.ExecuteNonQueryAsync();
+                    if (result > 0)
+                    {
+                        Console.WriteLine("Relación Estudiante-Salón insertada correctamente.");
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error al insertar: {ex.Message}");
+                    else
+                    {
+                        Console.WriteLine("Error al insertar la relación Estudiante-Salón.");
+                    }
                 }
             }
         }
@@ -45,78 +38,43 @@ namespace DAL
         // Método para actualizar la relación entre estudiante y salón
         public static async Task ActualizarAsync(string numeroIdentificacion, int salonId, int nuevoSalonId)
         {
-            string query = "UPDATE ESTUDIANTE_SALON SET SALON_SalonId = :NuevoSalonId " +
-                           "WHERE ESTUDIANTES_NumeroIdentificaion = :NumeroIdentificacion AND SALON_SalonId = :SalonId";
-
             using (var connection = new OracleConnection(OracleConnectionString.CadenaConexion))
             {
-                try
+                await connection.OpenAsync();
+                using (var command = new OracleCommand("pq_EstudianteSalon.pr_Actualizar", connection))
                 {
-                    await connection.OpenAsync();
-                    using (var command = new OracleCommand(query, connection))
-                    {
-                        // Parametrizar la consulta
-                        command.Parameters.Add(new OracleParameter("NumeroIdentificacion", numeroIdentificacion));
-                        command.Parameters.Add(new OracleParameter("SalonId", salonId));
-                        command.Parameters.Add(new OracleParameter("NuevoSalonId", nuevoSalonId));
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
+                    command.Parameters.Add("p_SalonId", OracleDbType.Int32).Value = salonId;
+                    command.Parameters.Add("p_NuevoSalonId", OracleDbType.Int32).Value = nuevoSalonId;
 
-                        int result = await command.ExecuteNonQueryAsync();
-                        if (result > 0)
-                        {
-                            Console.WriteLine("Relación Estudiante-Salón actualizada correctamente.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error al actualizar la relación Estudiante-Salón.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error al actualizar: {ex.Message}");
+                    await command.ExecuteNonQueryAsync();
                 }
             }
+
         }
 
         // Método para obtener los estudiantes de un salón
-        public static async Task TraerEstudiantesPorSalonAsync(int salonId)
+        public static async Task<DataTable> TraerEstudiantesPorSalonAsync(int salonId)
         {
-            string query = "SELECT E.NumeroIdentificaion, E.PrimerNombre, E.SegundoNombre, E.PrimerApellido, " +
-                           "E.SegundoApellido, E.FechaNacimiento, E.Telefono, E.Direccion, E.Correo, E.Estado, " +
-                           "S.NombreSalon, G.NombreGrado " +
-                           "FROM ESTUDIANTE_SALON ES " +
-                           "JOIN ESTUDIANTE E ON ES.ESTUDIANTES_NumeroIdentificaion = E.NumeroIdentificaion " +
-                           "JOIN SALON S ON ES.SALON_SalonId = S.SalonId " +
-                           "JOIN GRADO G ON S.GradoId_FK = G.GradoId_PK " +
-                           "WHERE ES.SALON_SalonId = :SalonId";
-
             using (var connection = new OracleConnection(OracleConnectionString.CadenaConexion))
             {
-                try
+                await connection.OpenAsync();
+                using (var command = new OracleCommand("pq_EstudianteSalon.pr_TraerEstudiantesPorSalon", connection))
                 {
-                    await connection.OpenAsync();
-                    using (var command = new OracleCommand(query, connection))
-                    {
-                        // Parametrizar la consulta
-                        command.Parameters.Add(new OracleParameter("SalonId", salonId));
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("p_SalonId", OracleDbType.Int32).Value = salonId;
+                    command.Parameters.Add("p_Resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-                        using (var reader = await command.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                // Imprimir los datos de los estudiantes
-                                Console.WriteLine($"Estudiante: {reader["NumeroIdentificaion"]}, " +
-                                                  $"{reader["PrimerNombre"]} {reader["PrimerApellido"]}, " +
-                                                  $"Correo: {reader["Correo"]}, Estado: {reader["Estado"]}");
-                            }
-                        }
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        DataTable dataTable = new DataTable();
+                        dataTable.Load(reader);
+                        return dataTable;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error al traer estudiantes: {ex.Message}");
                 }
             }
         }
+
     }
 }

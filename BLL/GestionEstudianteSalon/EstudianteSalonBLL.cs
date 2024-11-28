@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using DAL;
 
@@ -7,7 +8,7 @@ namespace BLL
     public class EstudianteSalonBLL
     {
         // Método para insertar la relación estudiante-salón
-        public static async Task InsertarEstudianteSalonAsync(string numeroIdentificacion, int salonId)
+        public  async Task InsertarEstudianteSalonAsync(string numeroIdentificacion, int salonId)
         {
             try
             {
@@ -23,11 +24,12 @@ namespace BLL
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al insertar: {ex.Message}");
+                throw;
             }
         }
 
         // Método para actualizar la relación entre estudiante y salón
-        public static async Task ActualizarEstudianteSalonAsync(string numeroIdentificacion, int salonId, int nuevoSalonId)
+        public  async Task ActualizarEstudianteSalonAsync(string numeroIdentificacion, int salonId, int nuevoSalonId)
         {
             try
             {
@@ -43,11 +45,12 @@ namespace BLL
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al actualizar: {ex.Message}");
+                throw;
             }
         }
 
         // Método para obtener los estudiantes de un salón
-        public static async Task TraerEstudiantesPorSalonAsync(int salonId)
+        public  async Task<DataTable> TraerEstudiantesPorSalonAsync(int salonId)
         {
             try
             {
@@ -58,11 +61,12 @@ namespace BLL
                 }
 
                 // Llamar al método de la DAL para traer los estudiantes
-                await EstudianteSalonDAL.TraerEstudiantesPorSalonAsync(salonId);
+                return await EstudianteSalonDAL.TraerEstudiantesPorSalonAsync(salonId);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al obtener estudiantes: {ex.Message}");
+                throw;
             }
         }
     }
