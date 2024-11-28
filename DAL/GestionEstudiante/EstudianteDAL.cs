@@ -135,18 +135,19 @@ public class EstudianteDAL
                     {
                         estudiantes.Add(new Estudiante
                         {
-                            NumeroIdentificacion = reader.GetString(0),
-                            PrimerNombre = reader.GetString(1),
-                            SegundoNombre = reader.GetString(2),
-                            PrimerApellido = reader.GetString(3),
-                            SegundoApellido = reader.GetString(4),
-                            FechaNacimiento = reader.GetDateTime(5),
-                            Telefono = reader.GetString(6),
-                            Direccion = reader.GetString(7),
-                            Correo = reader.GetString(8),
-                            Estado = reader.GetString(9),
-                            AcudienteId = reader.GetInt32(10),
-                            Edad = reader.GetInt32(11) // Edad calculada por el procedimiento
+                            TipoIdentificacion = reader["TipoIdentificacion"].ToString(),
+                            NumeroIdentificacion = reader.GetString(1),
+                            PrimerNombre = reader.GetString(2),
+                            SegundoNombre = reader.GetString(3),
+                            PrimerApellido = reader.GetString(4),
+                            SegundoApellido = reader.GetString(5),
+                            FechaNacimiento = reader.GetDateTime(6),
+                            Telefono = reader.GetString(7),
+                            Direccion = reader.GetString(8),
+                            Correo = reader.GetString(9),
+                            Estado = reader.GetString(10),
+                            AcudienteId = reader.GetInt32(11),
+                            Edad = reader.GetInt32(12) // Edad calculada por el procedimiento
                         });
                     }
                 }
