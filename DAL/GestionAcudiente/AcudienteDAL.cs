@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using Entity;
 using Entity.GestionAcudiente;
+using DAL.GestionDocente;
 
 namespace DAL
 {
@@ -134,6 +135,41 @@ namespace DAL
             {
                 Console.WriteLine($"Unexpected Error: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task<bool> ModificarAcudienteAsync(Acudiente acudiente)
+        {
+            try
+            {
+                using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
+                using var cmd = new OracleCommand("pq_Acudientes.pr_Actualizar", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.Add("p_IdAcudiente", OracleDbType.Int32).Value = acudiente.IdAcudiente;
+                cmd.Parameters.Add("p_PrimerNombre", OracleDbType.NVarchar2).Value = acudiente.PrimerNombre;
+                cmd.Parameters.Add("p_SegundoNombre", OracleDbType.NVarchar2).Value = acudiente.SegundoApellido;
+                cmd.Parameters.Add("p_PrimerApellido", OracleDbType.NVarchar2).Value = acudiente.PrimerApellido;
+                cmd.Parameters.Add("p_SegundoApellido", OracleDbType.NVarchar2).Value = acudiente.SegundoApellido;
+                cmd.Parameters.Add("p_Telefono", OracleDbType.NVarchar2).Value = acudiente.Telefono;
+                cmd.Parameters.Add("p_Email", OracleDbType.NVarchar2).Value = acudiente.Email;
+                
+
+                await conn.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+
+                return true;
+            }
+            catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
+            {
+                throw new DocenteException(ex.Message, ex.Number);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inesperado al modificar el acudiente: {ex.Message}");
+                throw;
             }
         }
     }

@@ -73,7 +73,6 @@
             btnMinimizar.TabIndex = 1;
             btnMinimizar.Text = "_";
             btnMinimizar.UseVisualStyleBackColor = true;
-            btnMinimizar.Click += button2_Click;
             // 
             // btnExit
             // 
@@ -86,6 +85,7 @@
             btnExit.TabIndex = 0;
             btnExit.Text = "X";
             btnExit.UseVisualStyleBackColor = true;
+            
             // 
             // panelInformation
             // 
