@@ -42,9 +42,9 @@
             gestionCursosToolStripMenuItem = new ToolStripMenuItem();
             gestionRolesToolStripMenuItem = new ToolStripMenuItem();
             gestionAcudienteToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
             contextMenuStrip2 = new ContextMenuStrip(components);
-            toolStripMenuItem1 = new ToolStripMenuItem();
             panelNavigator.SuspendLayout();
             panelInformation.SuspendLayout();
             panelPrincipal.SuspendLayout();
@@ -159,23 +159,14 @@
             // gestionCursosToolStripMenuItem
             // 
             gestionCursosToolStripMenuItem.Name = "gestionCursosToolStripMenuItem";
-            gestionCursosToolStripMenuItem.Size = new Size(120, 24);
-            gestionCursosToolStripMenuItem.Text = "Gestion Cursos";
+            gestionCursosToolStripMenuItem.Size = new Size(124, 24);
+            gestionCursosToolStripMenuItem.Text = "Gestion Grados";
             gestionCursosToolStripMenuItem.Click += gestionCursosToolStripMenuItem_Click;
             // 
             // gestionRolesToolStripMenuItem
             // 
             gestionRolesToolStripMenuItem.Name = "gestionRolesToolStripMenuItem";
-            gestionRolesToolStripMenuItem.Size = new Size(113, 24);
-            gestionRolesToolStripMenuItem.Text = "Gestion Roles";
-            // 
-            // sonRegistrarRol
-            // 
-            sonRegistrarRol.Name = "sonRegistrarRol";
-            sonRegistrarRol.Size = new Size(224, 26);
-            sonRegistrarRol.Text = "Registrar Rol";
-            sonRegistrarRol.Click += sonRegistrarRol_Click;
-            gestionRolesToolStripMenuItem.Size = new Size(107, 20);
+            gestionRolesToolStripMenuItem.Size = new Size(134, 24);
             gestionRolesToolStripMenuItem.Text = "Gestion Materias";
             gestionRolesToolStripMenuItem.Click += gestionRolesToolStripMenuItem_Click;
             // 
@@ -185,6 +176,13 @@
             gestionAcudienteToolStripMenuItem.Size = new Size(144, 24);
             gestionAcudienteToolStripMenuItem.Text = "Gestion Acudiente";
             gestionAcudienteToolStripMenuItem.Click += gestionAcudienteToolStripMenuItem_Click;
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(114, 24);
+            toolStripMenuItem1.Text = "Gestion Salon";
+            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // contextMenuStrip1
             // 
@@ -197,13 +195,6 @@
             contextMenuStrip2.ImageScalingSize = new Size(20, 20);
             contextMenuStrip2.Name = "contextMenuStrip2";
             contextMenuStrip2.Size = new Size(61, 4);
-            // 
-            // toolStripMenuItem1
-            // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(114, 24);
-            toolStripMenuItem1.Text = "Gestion Salon";
-            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // FrmInicio
             // 
