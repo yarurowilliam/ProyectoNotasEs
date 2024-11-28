@@ -1,4 +1,5 @@
 ﻿using BLL;
+using ENTITY;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,25 +10,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentacion.GestionCursosModule
+namespace Presentacion.GestionSalon
 {
-    public partial class FrmGestionCursos : Form
+    public partial class FrmGestionSalon : Form
     {
-        private readonly GradoBLL cursoBLL;
+        private readonly SalonBLL salonBLL;
         private string Valor = "GUARDAR";
 
-        public FrmGestionCursos()
+        public FrmGestionSalon()
         {
             InitializeComponent();
-            cursoBLL = new GradoBLL();
+            salonBLL = new SalonBLL();
             CargarTabla();
             btnGuardar.Text = Valor;
         }
 
         private void LimpiarFormulario()
         {
-            txtPrimerNombre.Clear();
+            txtNombreSalon.Clear();
+            TxtGradoId.Clear();
         }
+
 
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -39,6 +42,7 @@ namespace Presentacion.GestionCursosModule
             {
                 await ModificarAsync();
             }
+
         }
 
         private async void btnLimpiar_Click(object sender, EventArgs e)
@@ -52,21 +56,19 @@ namespace Presentacion.GestionCursosModule
         {
             if (tablaGrado.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Seleccione un grado para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un salón para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             var row = tablaGrado.SelectedRows[0];
-            var gradoId = (int)row.Cells["GradoId"].Value;
+            var salonId = (int)row.Cells["SalonId"].Value;
 
             try
             {
-                var curso = await cursoBLL.TraerPorIdAsync(gradoId);
-
-                // Verificar si el curso es nulo
-                if (!curso.Equals(default((int GradoId, string NombreGrado))))
+                var salon = await salonBLL.TraerPorIDAsync(salonId);
+                if (!salon.Equals(default(Salon)))
                 {
-                    txtPrimerNombre.Text = curso.NombreGrado;
+                    txtNombreSalon.Text = salon.NombreSalon;
 
                     Valor = "MODIFICAR";
                     btnGuardar.Text = Valor;
@@ -74,39 +76,51 @@ namespace Presentacion.GestionCursosModule
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al obtener la información del grado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al obtener la información del salón: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private async Task GuardarAsync()
         {
-            var nombreGrado = txtPrimerNombre.Text.ToUpper();
+            var salon = new Salon
+            {
+                NombreSalon = txtNombreSalon.Text.ToUpper(),
+                GradoId_FK = int.Parse(TxtGradoId.Text) // Incluir GradoId_FK
+            };
 
             try
             {
-                await cursoBLL.InsertarAsync(nombreGrado);
+                await salonBLL.InsertarAsync(salon);
 
-                MessageBox.Show("El grado se guardó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("El salón se guardó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarFormulario();
                 await CargarTabla();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar el grado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar el salón: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private async Task ModificarAsync()
         {
             var row = tablaGrado.SelectedRows[0];
-            var gradoId = (int)row.Cells["GradoId"].Value;
-            var nombreGrado = txtPrimerNombre.Text.ToUpper();
+            var salonId = (int)row.Cells["SALONID"].Value;
+
+            var salon = new Salon
+            {
+                SalonId = salonId,
+                NombreSalon = txtNombreSalon.Text.ToUpper(),
+                GradoId_FK = int.Parse(TxtGradoId.Text) // Incluir GradoId_FK
+            };
 
             try
             {
-                await cursoBLL.ActualizarAsync(gradoId, nombreGrado);
+                await salonBLL.ActualizarAsync(salon);
 
-                MessageBox.Show("El grado se modificó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("El salón se modificó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarFormulario();
                 await CargarTabla();
                 Valor = "GUARDAR";
@@ -114,25 +128,27 @@ namespace Presentacion.GestionCursosModule
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al modificar el grado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al modificar el salón: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private async Task CargarTabla()
         {
             try
             {
-                var grados = await cursoBLL.TraerTodosAsync();
+                var salones = await salonBLL.TraerTodosAsync();
 
-                tablaGrado.DataSource = grados.Select(g => new
+                tablaGrado.DataSource = salones.Select(s => new
                 {
-                    g.GradoId,
-                    g.NombreGrado
+                    s.SalonId,
+                    s.NombreSalon,
+                    s.GradoId_FK
                 }).ToList();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar los grados: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar los salones: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -144,15 +160,12 @@ namespace Presentacion.GestionCursosModule
 
                 MessageBox.Show("Llenado información para modificar", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Llenar el formulario con los datos seleccionados
-                txtPrimerNombre.Text = row.Cells["NombreGrado"].Value?.ToString();
+                txtNombreSalon.Text = row.Cells["NombreSalon"].Value?.ToString();
+                TxtGradoId.Text = row.Cells["GradoId_FK"].Value?.ToString(); // Incluir GradoId_FK
                 Valor = "MODIFICAR";
                 btnGuardar.Text = Valor;
             }
-        }
 
-        private void tablaGrado_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
         }
     }
