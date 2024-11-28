@@ -15,6 +15,7 @@ namespace Presentacion.GestionMateriaModule
             {
                 ConfigurarTabla();
                 ConsultarMaterias(); // Carga inicial de datos
+                txtSalonID.Enabled = false;
             }
             catch
             {
@@ -207,6 +208,11 @@ namespace Presentacion.GestionMateriaModule
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
+        }
+
+        private void BtnBuscar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

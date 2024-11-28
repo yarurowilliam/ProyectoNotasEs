@@ -1,5 +1,6 @@
 ﻿using BLL;
 using ENTITY;
+using Presentacion.GestionMateriaModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -86,7 +87,7 @@ namespace Presentacion.GestionSalon
             var salon = new Salon
             {
                 NombreSalon = txtNombreSalon.Text.ToUpper(),
-                GradoId_FK = int.Parse(TxtGradoId.Text) // Incluir GradoId_FK
+                GradoId_FK = GradoId // Incluir GradoId_FK
             };
 
             try
@@ -113,7 +114,7 @@ namespace Presentacion.GestionSalon
             {
                 SalonId = salonId,
                 NombreSalon = txtNombreSalon.Text.ToUpper(),
-                GradoId_FK = int.Parse(TxtGradoId.Text) // Incluir GradoId_FK
+                GradoId_FK = GradoId
             };
 
             try
@@ -167,6 +168,15 @@ namespace Presentacion.GestionSalon
             }
 
 
+        }
+
+        private int GradoId = 0;
+
+        private void BtnBuscar_Click(object sender, EventArgs e)
+        {
+            new FrmGradoGet().ShowDialog();
+            GradoId = FrmGradoGet.grado.GradoId;
+            TxtGradoId.Text = FrmGradoGet.grado.NombreGrado;
         }
     }
 }

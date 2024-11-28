@@ -39,6 +39,8 @@
             txtNombreMateria = new MaterialSkin.Controls.MaterialTextBox2();
             materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             tablaMaterias = new DataGridView();
+            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            lblNombreSalon = new MaterialSkin.Controls.MaterialLabel();
             cardInfo1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tablaMaterias).BeginInit();
             SuspendLayout();
@@ -46,6 +48,8 @@
             // cardInfo1
             // 
             cardInfo1.BackColor = Color.FromArgb(255, 255, 255);
+            cardInfo1.Controls.Add(lblNombreSalon);
+            cardInfo1.Controls.Add(materialLabel1);
             cardInfo1.Controls.Add(BtnBuscar);
             cardInfo1.Controls.Add(btnDesactivar);
             cardInfo1.Controls.Add(btnLimpiar);
@@ -83,6 +87,7 @@
             BtnBuscar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             BtnBuscar.UseAccentColor = false;
             BtnBuscar.UseVisualStyleBackColor = true;
+            BtnBuscar.Click += BtnBuscar_Click;
             // 
             // btnDesactivar
             // 
@@ -247,6 +252,30 @@
             tablaMaterias.TabIndex = 11;
             tablaMaterias.CellClick += tablaMaterias_CellClick;
             // 
+            // materialLabel1
+            // 
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel1.Location = new Point(286, 83);
+            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(61, 19);
+            materialLabel1.TabIndex = 29;
+            materialLabel1.Text = "Nombre:";
+            // 
+            // lblNombreSalon
+            // 
+            lblNombreSalon.AutoSize = true;
+            lblNombreSalon.Depth = 0;
+            lblNombreSalon.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            lblNombreSalon.Location = new Point(286, 102);
+            lblNombreSalon.MouseState = MaterialSkin.MouseState.HOVER;
+            lblNombreSalon.Name = "lblNombreSalon";
+            lblNombreSalon.Size = new Size(68, 19);
+            lblNombreSalon.TabIndex = 30;
+            lblNombreSalon.Text = "NO DATA";
+            // 
             // FrmRegistrarMateria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -276,5 +305,7 @@
         private MaterialSkin.Controls.MaterialTextBox2 txtNombreMateria;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
         private DataGridView tablaMaterias;
+        private MaterialSkin.Controls.MaterialLabel lblNombreSalon;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
     }
 }
