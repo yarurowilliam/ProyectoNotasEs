@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using DAL;
-using Entity;
+﻿using DAL;
 using Entity.GestionMateria;
 
 namespace BLL

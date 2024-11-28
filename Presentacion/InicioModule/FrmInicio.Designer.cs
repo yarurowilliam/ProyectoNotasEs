@@ -41,7 +41,6 @@
             gestionAlumnosToolStripMenuItem = new ToolStripMenuItem();
             gestionCursosToolStripMenuItem = new ToolStripMenuItem();
             gestionRolesToolStripMenuItem = new ToolStripMenuItem();
-            sonRegistrarRol = new ToolStripMenuItem();
             gestionAcudienteToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
             contextMenuStrip2 = new ContextMenuStrip(components);
@@ -169,17 +168,10 @@
             // 
             // gestionRolesToolStripMenuItem
             // 
-            gestionRolesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sonRegistrarRol });
             gestionRolesToolStripMenuItem.Name = "gestionRolesToolStripMenuItem";
-            gestionRolesToolStripMenuItem.Size = new Size(90, 20);
-            gestionRolesToolStripMenuItem.Text = "Gestion Roles";
-            // 
-            // sonRegistrarRol
-            // 
-            sonRegistrarRol.Name = "sonRegistrarRol";
-            sonRegistrarRol.Size = new Size(140, 22);
-            sonRegistrarRol.Text = "Registrar Rol";
-            sonRegistrarRol.Click += sonRegistrarRol_Click;
+            gestionRolesToolStripMenuItem.Size = new Size(107, 20);
+            gestionRolesToolStripMenuItem.Text = "Gestion Materias";
+            gestionRolesToolStripMenuItem.Click += gestionRolesToolStripMenuItem_Click;
             // 
             // gestionAcudienteToolStripMenuItem
             // 
@@ -238,7 +230,6 @@
         private ContextMenuStrip contextMenuStrip1;
         private ContextMenuStrip contextMenuStrip2;
         private ToolStripMenuItem gestionRolesToolStripMenuItem;
-        private ToolStripMenuItem sonRegistrarRol;
         private ToolStripMenuItem gestionAcudienteToolStripMenuItem;
         private MaterialSkin.Controls.MaterialLabel lblModulo;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;

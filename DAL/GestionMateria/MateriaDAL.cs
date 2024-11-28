@@ -1,8 +1,5 @@
-﻿using System;
-using System.Data;
-using System.Threading.Tasks;
+﻿using System.Data;
 using Oracle.ManagedDataAccess.Client;
-using Entity;
 using Entity.GestionMateria;
 
 namespace DAL
