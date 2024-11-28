@@ -28,20 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tablaEstudiante = new DataGridView();
+            tablaGrado = new DataGridView();
             cardInfo1 = new MaterialSkin.Controls.MaterialCard();
-            btnDesactivar = new MaterialSkin.Controls.MaterialButton();
             btnModificar = new MaterialSkin.Controls.MaterialButton();
             btnLimpiar = new MaterialSkin.Controls.MaterialButton();
             btnGuardar = new MaterialSkin.Controls.MaterialButton();
             txtPrimerNombre = new MaterialSkin.Controls.MaterialTextBox2();
             materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            ((System.ComponentModel.ISupportInitialize)tablaEstudiante).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tablaGrado).BeginInit();
             cardInfo1.SuspendLayout();
             SuspendLayout();
             // 
-            // tablaEstudiante
+            // tablaGrado
             // 
+            tablaGrado.AllowUserToDeleteRows = false;
+            tablaGrado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tablaGrado.Location = new Point(14, 159);
+            tablaGrado.Margin = new Padding(3, 4, 3, 4);
+            tablaGrado.Name = "tablaGrado";
+            tablaGrado.RowHeadersWidth = 51;
+            tablaGrado.Size = new Size(1345, 555);
+            tablaGrado.TabIndex = 14;
+            tablaGrado.CellClick += tablaGrado_CellClick;
+            tablaGrado.CellContentClick += tablaGrado_CellContentClick;
             tablaEstudiante.AllowUserToDeleteRows = false;
             tablaEstudiante.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tablaEstudiante.Location = new Point(14, 159);
@@ -54,7 +63,6 @@
             // cardInfo1
             // 
             cardInfo1.BackColor = Color.FromArgb(255, 255, 255);
-            cardInfo1.Controls.Add(btnDesactivar);
             cardInfo1.Controls.Add(btnModificar);
             cardInfo1.Controls.Add(btnLimpiar);
             cardInfo1.Controls.Add(btnGuardar);
@@ -98,6 +106,7 @@
             btnModificar.HighEmphasis = true;
             btnModificar.Icon = null;
             btnModificar.Location = new Point(521, 19);
+            btnModificar.Margin = new Padding(5);
             btnModificar.Margin = new Padding(5, 5, 5, 5);
             btnModificar.MouseState = MaterialSkin.MouseState.HOVER;
             btnModificar.Name = "btnModificar";
@@ -118,6 +127,8 @@
             btnLimpiar.Depth = 0;
             btnLimpiar.HighEmphasis = true;
             btnLimpiar.Icon = null;
+            btnLimpiar.Location = new Point(697, 19);
+            btnLimpiar.Margin = new Padding(5);
             btnLimpiar.Location = new Point(776, 19);
             btnLimpiar.Margin = new Padding(5, 5, 5, 5);
             btnLimpiar.MouseState = MaterialSkin.MouseState.HOVER;
@@ -139,6 +150,7 @@
             btnGuardar.HighEmphasis = true;
             btnGuardar.Icon = null;
             btnGuardar.Location = new Point(397, 19);
+            btnGuardar.Margin = new Padding(5);
             btnGuardar.Margin = new Padding(5, 5, 5, 5);
             btnGuardar.MouseState = MaterialSkin.MouseState.HOVER;
             btnGuardar.Name = "btnGuardar";
@@ -196,13 +208,14 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1375, 729);
+            Controls.Add(tablaGrado);
             Controls.Add(tablaEstudiante);
             Controls.Add(cardInfo1);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);
             Name = "FrmGestionCursos";
             Text = "FrmGestionCursos";
-            ((System.ComponentModel.ISupportInitialize)tablaEstudiante).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tablaGrado).EndInit();
             cardInfo1.ResumeLayout(false);
             cardInfo1.PerformLayout();
             ResumeLayout(false);
@@ -210,9 +223,8 @@
 
         #endregion
 
-        private DataGridView tablaEstudiante;
+        private DataGridView tablaGrado;
         private MaterialSkin.Controls.MaterialCard cardInfo1;
-        private MaterialSkin.Controls.MaterialButton btnDesactivar;
         private MaterialSkin.Controls.MaterialButton btnModificar;
         private MaterialSkin.Controls.MaterialButton btnLimpiar;
         private MaterialSkin.Controls.MaterialButton btnGuardar;
