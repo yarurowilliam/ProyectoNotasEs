@@ -51,6 +51,14 @@
             tablaGrado.TabIndex = 14;
             tablaGrado.CellClick += tablaGrado_CellClick;
             tablaGrado.CellContentClick += tablaGrado_CellContentClick;
+            tablaEstudiante.AllowUserToDeleteRows = false;
+            tablaEstudiante.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tablaEstudiante.Location = new Point(14, 159);
+            tablaEstudiante.Margin = new Padding(3, 4, 3, 4);
+            tablaEstudiante.Name = "tablaEstudiante";
+            tablaEstudiante.RowHeadersWidth = 51;
+            tablaEstudiante.Size = new Size(1345, 555);
+            tablaEstudiante.TabIndex = 14;
             // 
             // cardInfo1
             // 
@@ -70,6 +78,26 @@
             cardInfo1.Size = new Size(1341, 116);
             cardInfo1.TabIndex = 13;
             // 
+            // btnDesactivar
+            // 
+            btnDesactivar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnDesactivar.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnDesactivar.Depth = 0;
+            btnDesactivar.HighEmphasis = true;
+            btnDesactivar.Icon = null;
+            btnDesactivar.Location = new Point(643, 19);
+            btnDesactivar.Margin = new Padding(5, 5, 5, 5);
+            btnDesactivar.MouseState = MaterialSkin.MouseState.HOVER;
+            btnDesactivar.Name = "btnDesactivar";
+            btnDesactivar.NoAccentTextColor = Color.Empty;
+            btnDesactivar.Size = new Size(96, 36);
+            btnDesactivar.TabIndex = 31;
+            btnDesactivar.Text = "Bloquear";
+            btnDesactivar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnDesactivar.UseAccentColor = false;
+            btnDesactivar.UseVisualStyleBackColor = true;
+            btnDesactivar.Click += btnDesactivar_Click;
+            // 
             // btnModificar
             // 
             btnModificar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -79,6 +107,7 @@
             btnModificar.Icon = null;
             btnModificar.Location = new Point(521, 19);
             btnModificar.Margin = new Padding(5);
+            btnModificar.Margin = new Padding(5, 5, 5, 5);
             btnModificar.MouseState = MaterialSkin.MouseState.HOVER;
             btnModificar.Name = "btnModificar";
             btnModificar.NoAccentTextColor = Color.Empty;
@@ -100,6 +129,8 @@
             btnLimpiar.Icon = null;
             btnLimpiar.Location = new Point(697, 19);
             btnLimpiar.Margin = new Padding(5);
+            btnLimpiar.Location = new Point(776, 19);
+            btnLimpiar.Margin = new Padding(5, 5, 5, 5);
             btnLimpiar.MouseState = MaterialSkin.MouseState.HOVER;
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.NoAccentTextColor = Color.Empty;
@@ -120,6 +151,7 @@
             btnGuardar.Icon = null;
             btnGuardar.Location = new Point(397, 19);
             btnGuardar.Margin = new Padding(5);
+            btnGuardar.Margin = new Padding(5, 5, 5, 5);
             btnGuardar.MouseState = MaterialSkin.MouseState.HOVER;
             btnGuardar.Name = "btnGuardar";
             btnGuardar.NoAccentTextColor = Color.Empty;
@@ -177,6 +209,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1375, 729);
             Controls.Add(tablaGrado);
+            Controls.Add(tablaEstudiante);
             Controls.Add(cardInfo1);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);

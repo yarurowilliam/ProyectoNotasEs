@@ -155,5 +155,25 @@ namespace Presentacion.GestionCursosModule
         {
 
         }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDesactivar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
