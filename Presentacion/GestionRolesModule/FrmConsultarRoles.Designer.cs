@@ -128,12 +128,12 @@
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            materialLabel1.Location = new Point(395, 9);
+            materialLabel1.Location = new Point(421, 9);
             materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(166, 24);
+            materialLabel1.Size = new Size(141, 24);
             materialLabel1.TabIndex = 4;
-            materialLabel1.Text = "Consultar Docente";
+            materialLabel1.Text = "Consultar Roles";
             // 
             // FrmConsultarRoles
             // 

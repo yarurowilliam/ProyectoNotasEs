@@ -33,6 +33,11 @@ namespace Presentacion.GestionRolesModule
             Limpiar();
         }
 
+        private void ConsultarRoles()
+        {
+         //   _rolesBLL.ConsultarRolPorNombreAsync()
+        }
+
         private void Limpiar()
         {
             txtNombreRol.Text = string.Empty;

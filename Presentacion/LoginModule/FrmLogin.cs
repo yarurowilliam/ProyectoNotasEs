@@ -55,5 +55,10 @@ namespace Presentacion.LoginModule
         {
             return username == "admin" && password == "admin";
         }
+
+        private void materialCard1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

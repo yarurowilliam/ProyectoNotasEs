@@ -1,7 +1,5 @@
 ﻿using DAL.GestionDocente;
-using DAL;
 using Entity;
-using System.Text.RegularExpressions;
 
 namespace BLL.GestionDocente;
 
@@ -16,76 +14,95 @@ public class DocenteBLL
 
     public async Task<bool> InsertarDocenteAsync(Docente docente)
     {
-
-        if (await _docenteDAL.ExisteDocenteAsync(docente.NumeroIdentificacion))
-            throw new ArgumentException("Ya existe un docente con el mismo número de identificación.");
-
-        // Validaciones de negocio
-        if (string.IsNullOrWhiteSpace(docente.TipoIdentificacion))
-            throw new ArgumentException("El tipo de identificación es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(docente.NumeroIdentificacion))
-            throw new ArgumentException("El número de identificación es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(docente.PrimerNombre))
-            throw new ArgumentException("El primer nombre es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(docente.PrimerApellido))
-            throw new ArgumentException("El primer apellido es obligatorio.");
-
-        if (docente.FechaNacimiento > DateTime.Now)
-            throw new ArgumentException("La fecha de nacimiento no puede ser en el futuro.");
-
-        int edad = DateTime.Now.Year - docente.FechaNacimiento.Year;
-        if (DateTime.Now < docente.FechaNacimiento.AddYears(edad)) edad--;
-        if (edad < 18)
-            throw new ArgumentException("El docente debe ser mayor de edad.");
-
-        if (!string.IsNullOrWhiteSpace(docente.Correo))
+        try
         {
-            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (!Regex.IsMatch(docente.Correo, emailPattern))
-                throw new ArgumentException("El correo electrónico no es válido.");
+            return await _docenteDAL.InsertarDocenteAsync(docente);
         }
-
-        if (!string.IsNullOrWhiteSpace(docente.Telefono) && docente.Telefono.Length < 7)
-            throw new ArgumentException("El teléfono debe tener al menos 7 dígitos.");
-
-
-        return await _docenteDAL.InsertarDocenteAsync(docente);
+        catch (DocenteException ex)
+        {
+            // Registrar el error o manejar lógica adicional
+            throw new ApplicationException($"Error al insertar el docente: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            // Error genérico
+            throw new ApplicationException("Ocurrió un error inesperado al insertar el docente.", ex);
+        }
     }
 
-    public async Task<List<Docente>> ConsultarDocenteAsync(string numeroIdentificacion, bool aplicarFiltros)
+    public async Task<bool> DesactivarDocenteAsync(string numeroIdentificacion)
     {
-        return await _docenteDAL.ConsultarDocenteAsync(numeroIdentificacion, aplicarFiltros);
+        try
+        {
+            return await _docenteDAL.DesactivarDocenteAsync(numeroIdentificacion);
+        }
+        catch (DocenteException ex)
+        {
+            throw new ApplicationException($"Error al desactivar el docente: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Ocurrió un error inesperado al desactivar el docente.", ex);
+        }
     }
 
     public async Task<bool> ModificarDocenteAsync(Docente docente)
     {
-        // Validaciones de negocio para la modificación
-        if (string.IsNullOrWhiteSpace(docente.NumeroIdentificacion))
-            throw new ArgumentException("El número de identificación es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(docente.PrimerNombre))
-            throw new ArgumentException("El primer nombre es obligatorio.");
-
-        if (string.IsNullOrWhiteSpace(docente.PrimerApellido))
-            throw new ArgumentException("El primer apellido es obligatorio.");
-
-        if (docente.FechaNacimiento > DateTime.Now)
-            throw new ArgumentException("La fecha de nacimiento no puede ser en el futuro.");
-
-        if (!string.IsNullOrWhiteSpace(docente.Correo))
+        try
         {
-            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (!Regex.IsMatch(docente.Correo, emailPattern))
-                throw new ArgumentException("El correo electrónico no es válido.");
+            return await _docenteDAL.ModificarDocenteAsync(docente);
         }
+        catch (DocenteException ex)
+        {
+            throw new ApplicationException($"Error al modificar el docente: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Ocurrió un error inesperado al modificar el docente.", ex);
+        }
+    }
 
-        if (!string.IsNullOrWhiteSpace(docente.Telefono) && docente.Telefono.Length < 7)
-            throw new ArgumentException("El teléfono debe tener al menos 7 dígitos.");
+    public async Task<Docente> TraerPorIDAsync(string numeroIdentificacion)
+    {
+        try
+        {
+            var docente = await _docenteDAL.TraerPorIDAsync(numeroIdentificacion);
+            if (docente == null)
+            {
+                throw new ApplicationException($"No se encontró un docente con el número de identificación: {numeroIdentificacion}");
+            }
 
-        // Llamar a la DAL para modificar el docente
-        return await _docenteDAL.ModificarDocenteAsync(docente);
+            return docente;
+        }
+        catch (DocenteException ex)
+        {
+            throw new ApplicationException($"Error al consultar el docente: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Ocurrió un error inesperado al consultar el docente.", ex);
+        }
+    }
+
+    public async Task<List<Docente>> TraerTodosAsync()
+    {
+        try
+        {
+            var docentes = await _docenteDAL.TraerTodosAsync();
+            if (docentes == null || docentes.Count == 0)
+            {
+                throw new ApplicationException("No se encontraron docentes registrados.");
+            }
+
+            return docentes;
+        }
+        catch (DocenteException ex)
+        {
+            throw new ApplicationException($"Error al consultar los docentes: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Ocurrió un error inesperado al consultar los docentes.", ex);
+        }
     }
 }

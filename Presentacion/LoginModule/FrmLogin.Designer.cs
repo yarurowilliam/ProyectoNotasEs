@@ -60,6 +60,7 @@
             materialCard1.Padding = new Padding(14);
             materialCard1.Size = new Size(444, 342);
             materialCard1.TabIndex = 0;
+            materialCard1.Paint += materialCard1_Paint;
             // 
             // materialProgressBarLoading
             // 

@@ -1,11 +1,6 @@
 ﻿using Entity;
 using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.GestionDocente;
 
@@ -16,7 +11,7 @@ public class DocenteDAL
         try
         {
             using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
-            using var cmd = new OracleCommand("GestionDocente.InsertarDocente", conn)
+            using var cmd = new OracleCommand("pq_Docente.pr_Insertar", conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -29,119 +24,190 @@ public class DocenteDAL
             cmd.Parameters.Add("p_SegundoApellido", OracleDbType.Varchar2).Value = docente.SegundoApellido;
             cmd.Parameters.Add("p_FechaNacimiento", OracleDbType.Date).Value = docente.FechaNacimiento;
             cmd.Parameters.Add("p_Telefono", OracleDbType.Varchar2).Value = docente.Telefono;
-            cmd.Parameters.Add("p_Direccion", OracleDbType.Varchar2).Value = docente.Direccion;
-            cmd.Parameters.Add("p_Correo", OracleDbType.Varchar2).Value = docente.Correo;
-            cmd.Parameters.Add("p_Practicante", OracleDbType.Int32).Value = docente.Practicante ? 1 : 0;
-            cmd.Parameters.Add("p_UltimoUsuario", OracleDbType.Varchar2).Value = docente.UltimoUsuario;
+            cmd.Parameters.Add("p_Direccion", OracleDbType.NVarchar2).Value = docente.Direccion;
+            cmd.Parameters.Add("p_Correo", OracleDbType.NVarchar2).Value = docente.Correo;
+            cmd.Parameters.Add("p_Estado", OracleDbType.Varchar2).Value = docente.Estado;
+            cmd.Parameters.Add("p_UsuarioIdentificacion", OracleDbType.Varchar2).Value = docente.UsuarioIdentificacion;
 
             await conn.OpenAsync();
-            int result = await cmd.ExecuteNonQueryAsync();
-            if (result == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            await cmd.ExecuteNonQueryAsync();
+
+            return true;
+        }
+        catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
+        {
+            throw new DocenteException(ex.Message, ex.Number);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al insertar el docente: {ex.Message}");
-            return false;
+            Console.WriteLine($"Error inesperado al insertar el docente: {ex.Message}");
+            throw;
         }
     }
 
-    public async Task<bool> ExisteDocenteAsync(string numeroIdentificacion)
+    public async Task<bool> DesactivarDocenteAsync(string numeroIdentificacion)
     {
-        using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
-        using var cmd = new OracleCommand("SELECT COUNT(*) FROM Docente WHERE NumeroIdentificacion = :numeroIdentificacion", conn);
-        cmd.Parameters.Add("numeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
-
-        await conn.OpenAsync();
-        int count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-        return count > 0;
-    }
-
-    public async Task<List<Docente>> ConsultarDocenteAsync(string numeroIdentificacion, bool aplicarFiltros)
-    {
-        List<Docente> docentes = new List<Docente>();
-
-        using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
-        using var cmd = new OracleCommand("GestionDocente.ConsultarDocente", conn)
+        try
         {
-            CommandType = CommandType.StoredProcedure
-        };
-
-       cmd.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = aplicarFiltros && !string.IsNullOrEmpty(numeroIdentificacion) ? (object)numeroIdentificacion : DBNull.Value;
-
-        // Definir el parámetro de salida como cursor
-        cmd.Parameters.Add("resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
-
-        await conn.OpenAsync();
-
-        using var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            Docente docente = new Docente
+            using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
+            using var cmd = new OracleCommand("pq_Docente.pr_Desactivar", conn)
             {
-                TipoIdentificacion = reader["TipoIdentificacion"].ToString(),
-                NumeroIdentificacion = reader["NumeroIdentificacion"].ToString(),
-                PrimerNombre = reader["PrimerNombre"].ToString(),
-                SegundoNombre = reader["SegundoNombre"].ToString() ?? "",
-                PrimerApellido = reader["PrimerApellido"].ToString(),
-                SegundoApellido = reader["SegundoApellido"].ToString() ?? "",
-                FechaNacimiento = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
-                Edad = reader.GetInt32(reader.GetOrdinal("Edad")),
-                Telefono = reader["Telefono"].ToString(),
-                Direccion = reader["Direccion"].ToString(),
-                Correo = reader["Correo"].ToString(),
-                Practicante = reader.GetInt32(reader.GetOrdinal("Practicante")) == 1,
-                FechaCreacion = reader.GetDateTime(reader.GetOrdinal("FechaCreacion")),
-                FechaModificacion = reader.IsDBNull(reader.GetOrdinal("FechaModificacion")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("FechaModificacion")),
-                UltimoUsuario = reader["UltimoUsuario"].ToString(),
-                Estado = reader["Estado"].ToString()
+                CommandType = CommandType.StoredProcedure
             };
 
-            docentes.Add(docente);
-        }
+            cmd.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
 
-        return docentes;
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+
+            return true;
+        }
+        catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
+        {
+            throw new DocenteException(ex.Message, ex.Number);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inesperado al desactivar el docente: {ex.Message}");
+            throw;
+        }
     }
 
     public async Task<bool> ModificarDocenteAsync(Docente docente)
     {
-        using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
-        using var cmd = new OracleCommand("GestionDocente.ModificarDocente", conn)
+        try
         {
-            CommandType = CommandType.StoredProcedure
-        };
+            using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
+            using var cmd = new OracleCommand("pq_Docente.pr_Actualizar", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-        // Agregar parámetros para la modificación
-        cmd.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = docente.NumeroIdentificacion;
-        cmd.Parameters.Add("p_TipoIdentificacion", OracleDbType.Varchar2).Value = docente.TipoIdentificacion;
-        cmd.Parameters.Add("p_PrimerNombre", OracleDbType.Varchar2).Value = docente.PrimerNombre;
-        cmd.Parameters.Add("p_SegundoNombre", OracleDbType.Varchar2).Value = docente.SegundoNombre;
-        cmd.Parameters.Add("p_PrimerApellido", OracleDbType.Varchar2).Value = docente.PrimerApellido;
-        cmd.Parameters.Add("p_SegundoApellido", OracleDbType.Varchar2).Value = docente.SegundoApellido;
-        cmd.Parameters.Add("p_FechaNacimiento", OracleDbType.Date).Value = docente.FechaNacimiento;
-        cmd.Parameters.Add("p_Telefono", OracleDbType.Varchar2).Value = docente.Telefono;
-        cmd.Parameters.Add("p_Direccion", OracleDbType.Varchar2).Value = docente.Direccion;
-        cmd.Parameters.Add("p_Correo", OracleDbType.Varchar2).Value = docente.Correo;
-        cmd.Parameters.Add("p_Practicante", OracleDbType.Int32).Value = docente.Practicante ? 1 : 0;
-        cmd.Parameters.Add("p_Estado", OracleDbType.Varchar2).Value = docente.Estado;
-        cmd.Parameters.Add("p_UltimoUsuario", OracleDbType.Varchar2).Value = docente.UltimoUsuario;
+            cmd.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = docente.NumeroIdentificacion;
+            cmd.Parameters.Add("p_TipoIdentificacion", OracleDbType.Varchar2).Value = docente.TipoIdentificacion;
+            cmd.Parameters.Add("p_PrimerNombre", OracleDbType.Varchar2).Value = docente.PrimerNombre;
+            cmd.Parameters.Add("p_SegundoNombre", OracleDbType.Varchar2).Value = docente.SegundoNombre;
+            cmd.Parameters.Add("p_PrimerApellido", OracleDbType.Varchar2).Value = docente.PrimerApellido;
+            cmd.Parameters.Add("p_SegundoApellido", OracleDbType.Varchar2).Value = docente.SegundoApellido;
+            cmd.Parameters.Add("p_FechaNacimiento", OracleDbType.Date).Value = docente.FechaNacimiento;
+            cmd.Parameters.Add("p_Telefono", OracleDbType.Varchar2).Value = docente.Telefono;
+            cmd.Parameters.Add("p_Direccion", OracleDbType.NVarchar2).Value = docente.Direccion;
+            cmd.Parameters.Add("p_Correo", OracleDbType.NVarchar2).Value = docente.Correo;
+            cmd.Parameters.Add("p_Estado", OracleDbType.Varchar2).Value = docente.Estado;
+            cmd.Parameters.Add("p_UsuarioIdentificacion", OracleDbType.Varchar2).Value = docente.UsuarioIdentificacion;
 
-        await conn.OpenAsync();
-        int result = await cmd.ExecuteNonQueryAsync();
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
 
-        if (result == -1)
-        {
             return true;
         }
-        else
+        catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
         {
-            return false;
+            throw new DocenteException(ex.Message, ex.Number);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inesperado al modificar el docente: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<Docente> TraerPorIDAsync(string numeroIdentificacion)
+    {
+        try
+        {
+            using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
+            using var cmd = new OracleCommand("pq_Docente.pr_TraerPorID", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.Add("p_NumeroIdentificacion", OracleDbType.Varchar2).Value = numeroIdentificacion;
+            cmd.Parameters.Add("p_Resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new Docente
+                {
+                    TipoIdentificacion = reader["TipoIdentificacion"].ToString(),
+                    NumeroIdentificacion = reader["NumeroIdentificacion"].ToString(),
+                    PrimerNombre = reader["PrimerNombre"].ToString(),
+                    SegundoNombre = reader["SegundoNombre"].ToString(),
+                    PrimerApellido = reader["PrimerApellido"].ToString(),
+                    SegundoApellido = reader["SegundoApellido"].ToString(),
+                    FechaNacimiento = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                    Telefono = reader["Telefono"].ToString(),
+                    Direccion = reader["Direccion"].ToString(),
+                    Correo = reader["correo"].ToString(),
+                    Estado = reader["Estado"].ToString(),
+                    UsuarioIdentificacion = reader["USUARIO_Identificacion"].ToString()
+                };
+            }
+
+            return null;
+        }
+        catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
+        {
+            throw new DocenteException(ex.Message, ex.Number);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inesperado al traer el docente por ID: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<List<Docente>> TraerTodosAsync()
+    {
+        var docentes = new List<Docente>();
+
+        try
+        {
+            using var conn = new OracleConnection(OracleConnectionString.CadenaConexion);
+            using var cmd = new OracleCommand("pq_Docente.pr_TraerTodos", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.Add("p_Resultado", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+            await conn.OpenAsync();
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                var docente = new Docente
+                {
+                    TipoIdentificacion = reader["TipoIdentificacion"].ToString(),
+                    NumeroIdentificacion = reader["NumeroIdentificacion"].ToString(),
+                    PrimerNombre = reader["PrimerNombre"].ToString(),
+                    SegundoNombre = reader["SegundoNombre"].ToString(),
+                    PrimerApellido = reader["PrimerApellido"].ToString(),
+                    SegundoApellido = reader["SegundoApellido"].ToString(),
+                    FechaNacimiento = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento")),
+                    Telefono = reader["Telefono"].ToString(),
+                    Direccion = reader["Direccion"].ToString(),
+                    Correo = reader["correo"].ToString(),
+                    Estado = reader["Estado"].ToString(),
+                    UsuarioIdentificacion = reader["USUARIO_Identificacion"].ToString()
+                };
+
+                docentes.Add(docente);
+            }
+
+            return docentes;
+        }
+        catch (OracleException ex) when (ex.Number >= -20000 && ex.Number <= -20999)
+        {
+            throw new DocenteException(ex.Message, ex.Number);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inesperado al traer todos los docentes: {ex.Message}");
+            return docentes;
         }
     }
 }

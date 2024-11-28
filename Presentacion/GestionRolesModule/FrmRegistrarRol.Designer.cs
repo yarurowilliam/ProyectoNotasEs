@@ -34,7 +34,9 @@
             txtNombreRol = new MaterialSkin.Controls.MaterialTextBox2();
             materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            tableRoles = new DataGridView();
             cardInfo1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tableRoles).BeginInit();
             SuspendLayout();
             // 
             // cardInfo1
@@ -51,7 +53,7 @@
             cardInfo1.MouseState = MaterialSkin.MouseState.HOVER;
             cardInfo1.Name = "cardInfo1";
             cardInfo1.Padding = new Padding(12, 10, 12, 10);
-            cardInfo1.Size = new Size(964, 438);
+            cardInfo1.Size = new Size(964, 66);
             cardInfo1.TabIndex = 11;
             // 
             // btnLimpiar
@@ -62,7 +64,7 @@
             btnLimpiar.Depth = 0;
             btnLimpiar.HighEmphasis = true;
             btnLimpiar.Icon = null;
-            btnLimpiar.Location = new Point(368, 384);
+            btnLimpiar.Location = new Point(420, 14);
             btnLimpiar.Margin = new Padding(4);
             btnLimpiar.MouseState = MaterialSkin.MouseState.HOVER;
             btnLimpiar.Name = "btnLimpiar";
@@ -82,7 +84,7 @@
             btnGuardar.Depth = 0;
             btnGuardar.HighEmphasis = true;
             btnGuardar.Icon = null;
-            btnGuardar.Location = new Point(480, 384);
+            btnGuardar.Location = new Point(324, 14);
             btnGuardar.Margin = new Padding(4);
             btnGuardar.MouseState = MaterialSkin.MouseState.HOVER;
             btnGuardar.Name = "btnGuardar";
@@ -104,7 +106,7 @@
             txtNombreRol.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtNombreRol.HideSelection = true;
             txtNombreRol.LeadingIcon = null;
-            txtNombreRol.Location = new Point(171, 171);
+            txtNombreRol.Location = new Point(122, 12);
             txtNombreRol.Margin = new Padding(3, 2, 3, 2);
             txtNombreRol.MaxLength = 32767;
             txtNombreRol.MouseState = MaterialSkin.MouseState.OUT;
@@ -117,7 +119,7 @@
             txtNombreRol.SelectionLength = 0;
             txtNombreRol.SelectionStart = 0;
             txtNombreRol.ShortcutsEnabled = true;
-            txtNombreRol.Size = new Size(728, 48);
+            txtNombreRol.Size = new Size(181, 48);
             txtNombreRol.TabIndex = 11;
             txtNombreRol.TabStop = false;
             txtNombreRol.TextAlign = HorizontalAlignment.Left;
@@ -129,7 +131,7 @@
             materialLabel7.AutoSize = true;
             materialLabel7.Depth = 0;
             materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel7.Location = new Point(77, 188);
+            materialLabel7.Location = new Point(15, 24);
             materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel7.Name = "materialLabel7";
             materialLabel7.Size = new Size(88, 19);
@@ -149,11 +151,20 @@
             materialLabel1.TabIndex = 10;
             materialLabel1.Text = "Registro de roles";
             // 
+            // tableRoles
+            // 
+            tableRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableRoles.Location = new Point(16, 118);
+            tableRoles.Name = "tableRoles";
+            tableRoles.Size = new Size(960, 336);
+            tableRoles.TabIndex = 12;
+            // 
             // FrmRegistrarRol
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(989, 479);
+            Controls.Add(tableRoles);
             Controls.Add(cardInfo1);
             Controls.Add(materialLabel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -161,6 +172,7 @@
             Text = "FrmRegistrarRol";
             cardInfo1.ResumeLayout(false);
             cardInfo1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tableRoles).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -173,5 +185,6 @@
         private MaterialSkin.Controls.MaterialTextBox2 txtNombreRol;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private DataGridView tableRoles;
     }
 }

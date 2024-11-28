@@ -41,11 +41,15 @@
             sonModificarDocente = new ToolStripMenuItem();
             gestionAlumnosToolStripMenuItem = new ToolStripMenuItem();
             gestionCursosToolStripMenuItem = new ToolStripMenuItem();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            contextMenuStrip2 = new ContextMenuStrip(components);
             gestionRolesToolStripMenuItem = new ToolStripMenuItem();
             sonRegistrarRol = new ToolStripMenuItem();
+            gestionAcudienteToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            contextMenuStrip2 = new ContextMenuStrip(components);
+            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            lblModulo = new MaterialSkin.Controls.MaterialLabel();
             panelNavigator.SuspendLayout();
+            panelInformation.SuspendLayout();
             panelPrincipal.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -59,7 +63,7 @@
             panelNavigator.Location = new Point(0, 0);
             panelNavigator.Margin = new Padding(3, 2, 3, 2);
             panelNavigator.Name = "panelNavigator";
-            panelNavigator.Size = new Size(1005, 25);
+            panelNavigator.Size = new Size(1219, 25);
             panelNavigator.TabIndex = 0;
             // 
             // btnMinimizar
@@ -67,7 +71,7 @@
             btnMinimizar.Dock = DockStyle.Right;
             btnMinimizar.FlatStyle = FlatStyle.Flat;
             btnMinimizar.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnMinimizar.Location = new Point(949, 0);
+            btnMinimizar.Location = new Point(1163, 0);
             btnMinimizar.Margin = new Padding(3, 2, 3, 2);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Size = new Size(28, 25);
@@ -81,7 +85,7 @@
             btnExit.Dock = DockStyle.Right;
             btnExit.FlatStyle = FlatStyle.Flat;
             btnExit.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnExit.Location = new Point(977, 0);
+            btnExit.Location = new Point(1191, 0);
             btnExit.Margin = new Padding(3, 2, 3, 2);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(28, 25);
@@ -91,11 +95,13 @@
             // 
             // panelInformation
             // 
+            panelInformation.Controls.Add(lblModulo);
+            panelInformation.Controls.Add(materialLabel1);
             panelInformation.Dock = DockStyle.Bottom;
-            panelInformation.Location = new Point(0, 543);
+            panelInformation.Location = new Point(0, 715);
             panelInformation.Margin = new Padding(3, 2, 3, 2);
             panelInformation.Name = "panelInformation";
-            panelInformation.Size = new Size(1005, 46);
+            panelInformation.Size = new Size(1219, 46);
             panelInformation.TabIndex = 1;
             // 
             // panelPrincipal
@@ -105,17 +111,17 @@
             panelPrincipal.Location = new Point(0, 25);
             panelPrincipal.Margin = new Padding(3, 2, 3, 2);
             panelPrincipal.Name = "panelPrincipal";
-            panelPrincipal.Size = new Size(1005, 518);
+            panelPrincipal.Size = new Size(1219, 690);
             panelPrincipal.TabIndex = 2;
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { parentDocente, gestionAlumnosToolStripMenuItem, gestionCursosToolStripMenuItem, gestionRolesToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { parentDocente, gestionAlumnosToolStripMenuItem, gestionCursosToolStripMenuItem, gestionRolesToolStripMenuItem, gestionAcudienteToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(1005, 24);
+            menuStrip1.Size = new Size(1219, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -152,12 +158,34 @@
             gestionAlumnosToolStripMenuItem.Name = "gestionAlumnosToolStripMenuItem";
             gestionAlumnosToolStripMenuItem.Size = new Size(110, 20);
             gestionAlumnosToolStripMenuItem.Text = "Gestion Alumnos";
+            gestionAlumnosToolStripMenuItem.Click += gestionAlumnosToolStripMenuItem_Click;
             // 
             // gestionCursosToolStripMenuItem
             // 
             gestionCursosToolStripMenuItem.Name = "gestionCursosToolStripMenuItem";
             gestionCursosToolStripMenuItem.Size = new Size(98, 20);
             gestionCursosToolStripMenuItem.Text = "Gestion Cursos";
+            // 
+            // gestionRolesToolStripMenuItem
+            // 
+            gestionRolesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sonRegistrarRol });
+            gestionRolesToolStripMenuItem.Name = "gestionRolesToolStripMenuItem";
+            gestionRolesToolStripMenuItem.Size = new Size(90, 20);
+            gestionRolesToolStripMenuItem.Text = "Gestion Roles";
+            // 
+            // sonRegistrarRol
+            // 
+            sonRegistrarRol.Name = "sonRegistrarRol";
+            sonRegistrarRol.Size = new Size(140, 22);
+            sonRegistrarRol.Text = "Registrar Rol";
+            sonRegistrarRol.Click += sonRegistrarRol_Click;
+            // 
+            // gestionAcudienteToolStripMenuItem
+            // 
+            gestionAcudienteToolStripMenuItem.Name = "gestionAcudienteToolStripMenuItem";
+            gestionAcudienteToolStripMenuItem.Size = new Size(116, 20);
+            gestionAcudienteToolStripMenuItem.Text = "Gestion Acudiente";
+            gestionAcudienteToolStripMenuItem.Click += gestionAcudienteToolStripMenuItem_Click;
             // 
             // contextMenuStrip1
             // 
@@ -171,25 +199,36 @@
             contextMenuStrip2.Name = "contextMenuStrip2";
             contextMenuStrip2.Size = new Size(61, 4);
             // 
-            // gestionRolesToolStripMenuItem
+            // materialLabel1
             // 
-            gestionRolesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sonRegistrarRol });
-            gestionRolesToolStripMenuItem.Name = "gestionRolesToolStripMenuItem";
-            gestionRolesToolStripMenuItem.Size = new Size(90, 20);
-            gestionRolesToolStripMenuItem.Text = "Gestion Roles";
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
+            materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            materialLabel1.Location = new Point(12, 13);
+            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(206, 24);
+            materialLabel1.TabIndex = 0;
+            materialLabel1.Text = "Estas en el modulo de: ";
             // 
-            // sonRegistrarRol
+            // lblModulo
             // 
-            sonRegistrarRol.Name = "sonRegistrarRol";
-            sonRegistrarRol.Size = new Size(180, 22);
-            sonRegistrarRol.Text = "Registrar Rol";
-            sonRegistrarRol.Click += sonRegistrarRol_Click;
+            lblModulo.AutoSize = true;
+            lblModulo.Depth = 0;
+            lblModulo.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            lblModulo.Location = new Point(229, 16);
+            lblModulo.MouseState = MaterialSkin.MouseState.HOVER;
+            lblModulo.Name = "lblModulo";
+            lblModulo.Size = new Size(157, 19);
+            lblModulo.TabIndex = 1;
+            lblModulo.Text = "Seleccione un modulo";
             // 
             // FrmInicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1005, 589);
+            ClientSize = new Size(1219, 761);
             Controls.Add(panelPrincipal);
             Controls.Add(panelInformation);
             Controls.Add(panelNavigator);
@@ -200,6 +239,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmInicio";
             panelNavigator.ResumeLayout(false);
+            panelInformation.ResumeLayout(false);
+            panelInformation.PerformLayout();
             panelPrincipal.ResumeLayout(false);
             panelPrincipal.PerformLayout();
             menuStrip1.ResumeLayout(false);
@@ -225,5 +266,8 @@
         private ToolStripMenuItem sonModificarDocente;
         private ToolStripMenuItem gestionRolesToolStripMenuItem;
         private ToolStripMenuItem sonRegistrarRol;
+        private ToolStripMenuItem gestionAcudienteToolStripMenuItem;
+        private MaterialSkin.Controls.MaterialLabel lblModulo;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
     }
 }
