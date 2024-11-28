@@ -33,12 +33,11 @@
             btnMinimizar = new Button();
             btnExit = new Button();
             panelInformation = new Panel();
+            lblModulo = new MaterialSkin.Controls.MaterialLabel();
+            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             panelPrincipal = new Panel();
             menuStrip1 = new MenuStrip();
             parentDocente = new ToolStripMenuItem();
-            sonRegistrarDocente = new ToolStripMenuItem();
-            sonConsultarDocente = new ToolStripMenuItem();
-            sonModificarDocente = new ToolStripMenuItem();
             gestionAlumnosToolStripMenuItem = new ToolStripMenuItem();
             gestionCursosToolStripMenuItem = new ToolStripMenuItem();
             gestionRolesToolStripMenuItem = new ToolStripMenuItem();
@@ -46,8 +45,6 @@
             gestionAcudienteToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
             contextMenuStrip2 = new ContextMenuStrip(components);
-            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            lblModulo = new MaterialSkin.Controls.MaterialLabel();
             panelNavigator.SuspendLayout();
             panelInformation.SuspendLayout();
             panelPrincipal.SuspendLayout();
@@ -104,6 +101,31 @@
             panelInformation.Size = new Size(1219, 46);
             panelInformation.TabIndex = 1;
             // 
+            // lblModulo
+            // 
+            lblModulo.AutoSize = true;
+            lblModulo.Depth = 0;
+            lblModulo.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            lblModulo.Location = new Point(229, 16);
+            lblModulo.MouseState = MaterialSkin.MouseState.HOVER;
+            lblModulo.Name = "lblModulo";
+            lblModulo.Size = new Size(157, 19);
+            lblModulo.TabIndex = 1;
+            lblModulo.Text = "Seleccione un modulo";
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
+            materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            materialLabel1.Location = new Point(12, 13);
+            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(206, 24);
+            materialLabel1.TabIndex = 0;
+            materialLabel1.Text = "Estas en el modulo de: ";
+            // 
             // panelPrincipal
             // 
             panelPrincipal.Controls.Add(menuStrip1);
@@ -127,31 +149,10 @@
             // 
             // parentDocente
             // 
-            parentDocente.DropDownItems.AddRange(new ToolStripItem[] { sonRegistrarDocente, sonConsultarDocente, sonModificarDocente });
             parentDocente.Name = "parentDocente";
             parentDocente.Size = new Size(106, 20);
             parentDocente.Text = "Gestion Docente";
-            // 
-            // sonRegistrarDocente
-            // 
-            sonRegistrarDocente.Name = "sonRegistrarDocente";
-            sonRegistrarDocente.Size = new Size(172, 22);
-            sonRegistrarDocente.Text = "Registrar Docente";
-            sonRegistrarDocente.Click += sonRegistrarDocente_Click;
-            // 
-            // sonConsultarDocente
-            // 
-            sonConsultarDocente.Name = "sonConsultarDocente";
-            sonConsultarDocente.Size = new Size(172, 22);
-            sonConsultarDocente.Text = "Consultar Docente";
-            sonConsultarDocente.Click += sonConsultarDocente_Click;
-            // 
-            // sonModificarDocente
-            // 
-            sonModificarDocente.Name = "sonModificarDocente";
-            sonModificarDocente.Size = new Size(172, 22);
-            sonModificarDocente.Text = "Modificar Docente";
-            sonModificarDocente.Click += sonModificarDocente_Click;
+            parentDocente.Click += parentDocente_Click;
             // 
             // gestionAlumnosToolStripMenuItem
             // 
@@ -199,31 +200,6 @@
             contextMenuStrip2.Name = "contextMenuStrip2";
             contextMenuStrip2.Size = new Size(61, 4);
             // 
-            // materialLabel1
-            // 
-            materialLabel1.AutoSize = true;
-            materialLabel1.Depth = 0;
-            materialLabel1.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
-            materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            materialLabel1.Location = new Point(12, 13);
-            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(206, 24);
-            materialLabel1.TabIndex = 0;
-            materialLabel1.Text = "Estas en el modulo de: ";
-            // 
-            // lblModulo
-            // 
-            lblModulo.AutoSize = true;
-            lblModulo.Depth = 0;
-            lblModulo.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            lblModulo.Location = new Point(229, 16);
-            lblModulo.MouseState = MaterialSkin.MouseState.HOVER;
-            lblModulo.Name = "lblModulo";
-            lblModulo.Size = new Size(157, 19);
-            lblModulo.TabIndex = 1;
-            lblModulo.Text = "Seleccione un modulo";
-            // 
             // FrmInicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -257,13 +233,10 @@
         private Button btnMinimizar;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem parentDocente;
-        private ToolStripMenuItem sonRegistrarDocente;
-        private ToolStripMenuItem sonConsultarDocente;
         private ToolStripMenuItem gestionAlumnosToolStripMenuItem;
         private ToolStripMenuItem gestionCursosToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private ContextMenuStrip contextMenuStrip2;
-        private ToolStripMenuItem sonModificarDocente;
         private ToolStripMenuItem gestionRolesToolStripMenuItem;
         private ToolStripMenuItem sonRegistrarRol;
         private ToolStripMenuItem gestionAcudienteToolStripMenuItem;

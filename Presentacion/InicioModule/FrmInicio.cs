@@ -71,4 +71,10 @@ public partial class FrmInicio : Form
         OpenFormInPanel(new FrmRegistrarAcudiente());
         lblModulo.Text = "Gestionar Acudientes";
     }
+
+    private void parentDocente_Click(object sender, EventArgs e)
+    {
+        OpenFormInPanel(new FrmRegistrarDocente());
+        lblModulo.Text = "Registrar Docentes";
+    }
 }
