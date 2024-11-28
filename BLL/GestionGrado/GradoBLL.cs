@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DAL;
 
 namespace BLL
 {
     public class GradoBLL
     {
-        private GradoDAL gradoDAL;
+        private readonly GradoDAL gradoDAL;
 
         public GradoBLL()
         {
             gradoDAL = new GradoDAL();
         }
 
-        public void Insertar(string nombreGrado)
+        public async Task InsertarAsync(string nombreGrado)
         {
             if (string.IsNullOrEmpty(nombreGrado))
             {
                 throw new ArgumentException("El nombre del grado es obligatorio.");
             }
 
-            gradoDAL.Insertar(nombreGrado);
+            await gradoDAL.InsertarAsync(nombreGrado);
         }
 
-        public void Actualizar(int gradoId, string nombreGrado)
+        public async Task ActualizarAsync(int gradoId, string nombreGrado)
         {
             if (gradoId <= 0)
             {
@@ -35,17 +36,17 @@ namespace BLL
                 throw new ArgumentException("El nombre del grado es obligatorio.");
             }
 
-            gradoDAL.Actualizar(gradoId, nombreGrado);
+            await gradoDAL.ActualizarAsync(gradoId, nombreGrado);
         }
 
-        public List<(int GradoId, string NombreGrado)> TraerTodos()
+        public async Task<List<(int GradoId, string NombreGrado)>> TraerTodosAsync()
         {
-            return gradoDAL.TraerTodos();
+            return await gradoDAL.TraerTodosAsync();
         }
 
-        public (int GradoId, string NombreGrado) TraerPorId(int gradoId)
+        public async Task<(int GradoId, string NombreGrado)> TraerPorIdAsync(int gradoId)
         {
-            return gradoDAL.TraerPorId(gradoId);
+            return await gradoDAL.TraerPorIdAsync(gradoId);
         }
     }
 }

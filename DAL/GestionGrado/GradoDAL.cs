@@ -2,6 +2,7 @@
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -14,7 +15,7 @@ namespace DAL
             conexion = new OracleConnection(OracleConnectionString.CadenaConexion);
         }
 
-        public void Insertar(string nombreGrado)
+        public async Task InsertarAsync(string nombreGrado)
         {
             using (var cmd = new OracleCommand("pq_Grado.pr_Insertar", conexion))
             {
@@ -23,8 +24,8 @@ namespace DAL
 
                 try
                 {
-                    conexion.Open();
-                    cmd.ExecuteNonQuery();
+                    await conexion.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
                 }
                 catch (Exception ex)
                 {
@@ -33,12 +34,12 @@ namespace DAL
                 }
                 finally
                 {
-                    conexion.Close();
+                    await conexion.CloseAsync();
                 }
             }
         }
 
-        public void Actualizar(int gradoId, string nombreGrado)
+        public async Task ActualizarAsync(int gradoId, string nombreGrado)
         {
             using (var cmd = new OracleCommand("pq_Grado.pr_Actualizar", conexion))
             {
@@ -48,8 +49,8 @@ namespace DAL
 
                 try
                 {
-                    conexion.Open();
-                    cmd.ExecuteNonQuery();
+                    await conexion.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
                 }
                 catch (Exception ex)
                 {
@@ -58,12 +59,12 @@ namespace DAL
                 }
                 finally
                 {
-                    conexion.Close();
+                    await conexion.CloseAsync();
                 }
             }
         }
 
-        public List<(int GradoId, string NombreGrado)> TraerTodos()
+        public async Task<List<(int GradoId, string NombreGrado)>> TraerTodosAsync()
         {
             var grados = new List<(int, string)>();
             using (var cmd = new OracleCommand("pq_Grado.pr_TraerTodos", conexion))
@@ -73,10 +74,10 @@ namespace DAL
 
                 try
                 {
-                    conexion.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    await conexion.OpenAsync();
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             grados.Add((reader.GetInt32(0), reader.GetString(1)));
                         }
@@ -89,13 +90,13 @@ namespace DAL
                 }
                 finally
                 {
-                    conexion.Close();
+                    await conexion.CloseAsync();
                 }
             }
             return grados;
         }
 
-        public (int GradoId, string NombreGrado) TraerPorId(int gradoId)
+        public async Task<(int GradoId, string NombreGrado)> TraerPorIdAsync(int gradoId)
         {
             using (var cmd = new OracleCommand("pq_Grado.pr_TraerPorID", conexion))
             {
@@ -105,10 +106,10 @@ namespace DAL
 
                 try
                 {
-                    conexion.Open();
-                    using (var reader = cmd.ExecuteReader())
+                    await conexion.OpenAsync();
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             return (reader.GetInt32(0), reader.GetString(1));
                         }
@@ -125,7 +126,7 @@ namespace DAL
                 }
                 finally
                 {
-                    conexion.Close();
+                    await conexion.CloseAsync();
                 }
             }
         }
